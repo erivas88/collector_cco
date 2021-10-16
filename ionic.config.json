@@ -1,0 +1,7 @@
+{
+  "name": "projectgp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

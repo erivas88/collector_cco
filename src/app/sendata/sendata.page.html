@@ -1,0 +1,220 @@
+<style>
+  .badge-one {
+  position: absolute;
+  top: 0px;
+  right: -5px;
+  font-size: 0.6em;
+  --padding-start: 5px;
+  --padding-end: 5px;
+}
+
+.badge-two {
+  position: absolute;
+  top: 0px;
+  right: -5px;
+  font-size: 0.6em;
+  --padding-start: 3px;
+  --padding-end: 3px;
+}
+</style>
+<!--<ion-header>
+  <ion-toolbar  color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button  ></ion-menu-button>
+      </ion-buttons>
+    <ion-title>
+      Enviar datos
+    </ion-title>
+    <ion-buttons slot="end"  >
+      <ion-button  expand="block"  (click)="this.presentActionSheet()" >
+    
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+   
+  </ion-toolbar>
+ 
+</ion-header>-->
+
+<ion-header translucent="true">
+  <ion-toolbar  color="primary">
+    <ion-buttons *ngIf="!showSearchbar" slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-segment  [(ngModel)]="selectedView" >
+      <ion-segment-button value="toSend">
+        SIN ENVIAR
+      </ion-segment-button>
+      <ion-segment-button value="Sent">
+       ENVIADOS
+      </ion-segment-button>
+    </ion-segment>
+   
+   
+    <ion-buttons slot="end">
+      <!--<ion-button class="badge-button" routerLink="/notifications/" routerDirection="forward">-->
+        <ion-button class="badge-button" (click)="resolveDNS()" >
+        <ion-icon  name="server-outline">
+        </ion-icon>
+        <ion-badge class="badge-one" color="{{estatus['class']}}"><ion-icon name="{{estatus['icon']}}"></ion-icon></ion-badge>
+      </ion-button>
+     <ion-button  expand="block"  (click)="this.presentActionSheet()" >
+    
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content  class="nun_blk">
+
+
+  
+
+ 
+  
+  <!-- Segment buttons with the first checked and the last disabled -->
+ 
+  
+  <!-- Segment buttons with values and icons -->
+ 
+<!---
+  <ion-segment [(ngModel)]="selectedView" color="primary">
+    <ion-segment-button value="toSend" >
+      <ion-icon name="phone-portrait-outline"></ion-icon> <ion-label>Sin Enviar </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Sent">
+      <ion-icon name="server-outline"></ion-icon>  <ion-label>Enviados</ion-label>
+    </ion-segment-button>
+  </ion-segment>-->
+
+  <div [ngSwitch]="selectedView">
+
+    <div *ngSwitchCase="'toSend'"  >
+
+     
+
+    
+      
+
+
+    <div *ngIf="checkBoxList.length === 0" >
+      <div class="ion-text-center" color="primary" style="padding-top: 70px;" >
+        <h3><ion-icon slot="icon-only" color="medium" name="time-outline" style=" font-size: 64px;text-align: center; vertical-align: middle;"></ion-icon> 
+        </h3>
+        <ion-text color="medium">
+          <h6>No hay datos por enviar </h6>
+        </ion-text>
+     </div>      
+   </div>
+
+   <div *ngIf="checkBoxList.length > 0">
+    
+      <ion-searchbar
+                 [debounce]="250"
+       style="background-color: #3880ff;"  placeholder="Buscar"
+      inputmode="text"    
+      [debounce]="250"
+      animated  (ionChange)="onsearchChange($event)"
+  ></ion-searchbar>
+      
+  <ion-list  style="padding-top: 0;">
+    <ion-item  style="padding-top: 0;">
+
+      <ion-label><strong>Seleccionar Todo</strong></ion-label>
+      <ion-checkbox slot="start" 
+      [(ngModel)]="masterCheck"
+      [indeterminate]="isIndeterminate"
+        (click)="checkMaster($event)"  style="padding-top: 0;"></ion-checkbox>
+     
+    </ion-item>
+  </ion-list>
+  <ion-list  style="padding-top: 0;">
+    <ion-item *ngFor="let item of checkBoxList | filtro :textoBuscar "  style="padding-top: 0;">
+    <!-- <ion-label>        
+        <h3 color="dark"> <ion-icon name="time-outline" color="danger" style="padding-bottom: 0px;" ></ion-icon> {{ item.estacion }}  </h3>        
+        <p color="medium">{{ item.fecha_medicion + " - " +item.hora_medicion }}</p>           
+     </ion-label>   -->
+    
+     <ion-label class="nun_blk">
+      <h3 color="dark">  {{ item.estacion }}  </h3>        
+      <p color="medium">{{ item.fecha_medicion + " - " +item.hora_medicion }}</p>  
+     </ion-label>
+      <ion-checkbox slot="start" 
+      [(ngModel)]="item.isChecked" 
+      (ionChange)="checkEvent()"></ion-checkbox>
+      <ion-icon name="location-sharp" color="primary" slot="start"></ion-icon>
+      <ion-icon name="time-sharp" color="warning" style="padding-bottom: 0px;"  slot="end"  ></ion-icon>
+     
+      </ion-item>
+  </ion-list>
+
+ 
+
+ 
+
+    </div>
+
+   </div>
+
+
+
+  
+    <div *ngSwitchCase="'Sent'">
+
+      <div *ngIf="!sentdata || sentdata.length === 0" >
+        <div class="ion-text-center" color="primary" style="padding-top: 70px;" >
+          <h3><ion-icon slot="icon-only" color="medium" name="location-outline" style=" font-size: 64px;text-align: center; vertical-align: middle;"></ion-icon> 
+          </h3>
+          <ion-text color="medium">
+            <h6>Sin Datos</h6>
+          </ion-text>
+       </div>      
+     </div>
+
+     <div *ngIf=" sentdata.length > 0">
+      <ion-searchbar (ionChange)="onsearchChangeMirror($event)" style="background-color: #3880ff;"  placeholder="Buscar"
+      inputmode="text"    
+      [debounce]="250"
+      animated 
+></ion-searchbar>
+      <ion-list style="padding-top: 0;">
+        <ion-item *ngFor="let item of sentdata | filtro :textoBuscarMirror"  style="padding-top: 0;">
+          <ion-icon slot="start" name="location-sharp" color="primary"  ></ion-icon>   
+           <ion-label>
+            <h3 color="dark">  {{ item.estacion}}  </h3>        
+            <p>{{ item.fecha_medicion + " - " +item.hora_medicion }}</p>           
+         </ion-label>   
+         <ion-icon name="checkmark-done-circle-sharp" color="success" slot="end" ></ion-icon> 
+         <ion-icon name="chevron-forward-outline"  color="primary" slot="end" (click)="seeMore(item.id)"></ion-icon>        
+       </ion-item>
+      </ion-list>
+    </div>
+
+    </div>
+    </div>
+  
+  
+  
+ 
+
+
+
+
+  
+ 
+ 
+
+<!-- fab placed to the bottom end -->
+
+
+
+<!-- fab placed to the bottom and start and on the bottom edge of the content overlapping footer with a list to the right -->
+
+
+<!-- fab placed in the center of the content with a list on each side -->
+
+
+
+
+</ion-content>

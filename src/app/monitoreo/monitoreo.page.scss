@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'nuni-black';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../../assets/fonts/Quicksand/static/Quicksand-Regular.ttf');
+  }
+  @font-face {
+    font-family: 'nuni-black';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../../assets/fonts/Quicksand/static/Quicksand-Regular.ttf');
+  }
+  @font-face {
+    font-family: 'nuni-black';
+    font-style: normal;
+    font-weight: medium;
+    src: url('../../assets/fonts/Quicksand/static/Quicksand-Regular.ttf');
+  }
+  
+  * {
+  
+  
+    font-family: 'nuni-black' !important;
+  
+  
+  }
+  .nun_blk{
+    font-family: 'nuni-black' !important;
+  }
+  .alertDanger{
+    background-color: rgb(207, 11, 11);
+    color: white;
+   
+}
+.alertCancel{ --background: red; button.alertButton{ color: white; } }

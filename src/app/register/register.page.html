@@ -1,0 +1,235 @@
+<ion-header>
+  <ion-toolbar  color="primary">
+      <ion-buttons slot="start" >
+      <ion-menu-button  color=""></ion-menu-button>
+      </ion-buttons>
+    <ion-title >
+      Registrar Monitoreo
+    </ion-title>
+    <ion-buttons slot="end"  >
+      <ion-button  color="" expand="block" >
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+
+     
+        
+    
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="nun_blk">
+
+  <ion-card>
+
+
+
+  
+    <ion-list style="padding-top: 0px;">
+      
+      <ion-item-divider color="light">   
+        <ion-icon  slot="start"   name="location-outline"></ion-icon>
+        <ion-label color='dark' style="font-weight: bold;">
+       <h2>Datos de Monitoreo</h2> 
+        </ion-label>
+      </ion-item-divider>
+  
+    
+      <ion-item class="nun_blk">
+        <ion-icon  slot="start" color="primary" name="chevron-forward"></ion-icon>
+        <ion-label class="nun_blk" position="stacked" color="primary" >Programa</ion-label>
+        <ion-select  [(ngModel)]="register['programa']" placeholder="Seleccione programa"    okText="OK" cancelText="Cancelar">
+        <ion-select-option style="font-size: 11px;" *ngFor="let data of programas | async" value=" {{ data.id }}"  >{{ data.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item class="nun_blk">
+        <ion-icon  slot="start" color="primary" name="chevron-forward"></ion-icon>
+        <ion-label class="nun_blk" position="stacked" color="primary" >Latitud </ion-label>
+
+
+        <ion-input   [(ngModel)]="latitude"  placeholder="Ingrese nivel" readonly ></ion-input>  
+    
+      </ion-item>
+
+       <ion-item class="nun_blk">
+        <ion-icon  slot="start" color="primary" name="chevron-forward"></ion-icon>
+        <ion-label class="nun_blk" position="stacked" color="primary" >Longitud </ion-label>
+        <ion-input  [(ngModel)]="longitude" placeholder="Ingrese nivel"  readonly ></ion-input>
+    
+      </ion-item>
+
+
+    
+      <ion-item>
+        <ion-icon  slot="start" color="primary"   name="chevron-forward"  ></ion-icon>   
+        <ion-label class="nun_blk"  position="stacked" color="primary" >Estación</ion-label>
+        <ion-select  [(ngModel)]="register['estacion']" (ionChange)="getHistoric(register['estacion'])" class="nun_blk" placeholder="Seleccione estación"     okText="OK" cancelText="Cancelar">
+          <ion-select-option style="font-size: 11px;" *ngFor="let data of estaciones | async" value=" {{ data.name }}"  >{{ data.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item-divider color="light"  >
+    
+   
+        <ion-label color="dark">
+          <h2> Nivel</h2>
+        </ion-label>
+      </ion-item-divider>
+      
+  
+      <ion-item >
+        <ion-icon  slot="start" color="primary"   name="chevron-forward"  ></ion-icon>   
+        <ion-label class="nun_blk" position="stacked" color="primary" >Equipo Nivel</ion-label>
+        <ion-select  [(ngModel)]="register['equipo_nivel']"  placeholder="Seleccione equipo" class="nun_blk"  okText="OK" cancelText="Cancelar">
+          <ion-select-option style="font-size: 11px;" *ngFor="let data of equipos_nivel | async" value=" {{ data.id }}"  >{{ data.tipo+" "+data.name }}</ion-select-option>
+         </ion-select>
+     
+      </ion-item>
+
+      
+      
+      <ion-item>
+        <ion-icon  slot="start"  name="{{templateQty.nivel.icon}}" color="{{templateQty.nivel.color}}" ></ion-icon>   
+        <ion-label position="stacked" color="primary">Nivel [m.bnb]   <span style="float: right; ">{{templateQty.nivel.factor}}</span></ion-label>
+        <ion-input (ionChange)="ionChangeValor($event,'nivel')" [debounce]="250"  [(ngModel)]="register['valor_nivel']"  placeholder="Ingrese nivel"  type="number"></ion-input>
+        <ion-button fill="outline" slot="end"  (click)="openChart('nivel')" style="height: 75%;"><ion-icon name="pulse-outline" slot="icon-only"></ion-icon></ion-button>
+
+      </ion-item>
+
+      <ion-item-divider  color="light">
+   
+        <ion-label color="dark">
+          <h2>Caudal </h2>
+        </ion-label>
+      </ion-item-divider>
+  
+      <ion-item>
+        <ion-icon  slot="start"  color="primary"  name="chevron-forward"  ></ion-icon>   
+        <ion-label class="nun_blk" position="stacked" color="primary" >Equipo Caudal</ion-label>
+        <ion-select   [(ngModel)]="register['equipo_caudal']"  placeholder="Seleccione equipo" class="nun_blk" value="" okText="OK" cancelText="Cancelar" >
+          <ion-select-option style="font-size: 11px;" *ngFor="let data of equipos_caudal | async" value=" {{ data.id }}"  >{{ data.tipo+" "+data.name }}</ion-select-option>
+          </ion-select>
+      </ion-item>
+  
+      <ion-item>
+        
+        <ion-icon slot="start"  name="{{templateQty.caudal.icon}}" color="{{templateQty.caudal.color}}" > </ion-icon>   
+        <ion-label position="stacked" color="primary">Caudal [l/s]  <span style="float: right; ">{{templateQty.caudal.factor}}</span></ion-label>
+        <ion-input style="width: 100%;" (ionChange)="ionChangeValor($event,'caudal')" [debounce]="250"  [(ngModel)]="register['valor_caudal']"  placeholder="Ingrese caudal" type="number"></ion-input>
+        <ion-button fill="outline" slot="end" (click)="openChart('caudal')" style="height: 75%;"><ion-icon name="pulse-outline" slot="icon-only"></ion-icon></ion-button>
+        
+      </ion-item>
+
+      <ion-item-divider color="light">
+  
+        <ion-label color='dark'>
+         <h2> Multiparámetro</h2>
+        </ion-label>
+      </ion-item-divider>
+  
+  
+      <ion-item>
+           <ion-icon  slot="start" color="primary"   name="chevron-forward"  ></ion-icon>   
+        <ion-label position="stacked" class="nun_blk" color="primary" >Equipo Multiparametro</ion-label>
+        <ion-select [(ngModel)]="register['equipo_multiparametro']" placeholder="Seleccione equipo" class="nun_blk"  okText="OK" cancelText="Cancelar">
+          <ion-select-option style="font-size: 11px;" *ngFor="let data of  equipos_multiparametro | async" value=" {{ data.id }}"  >{{ data.tipo+" "+data.name }}</ion-select-option>         
+         </ion-select>
+      </ion-item>
+      
+       
+      <ion-item>
+        <ion-icon  slot="start"  name="{{templateQty.temperatura.icon}}" color="{{templateQty.temperatura.color}}"  ></ion-icon>   
+        <ion-label position="stacked"  color="primary">Temperatura [°C]   <span style="float: right; ">{{templateQty.temperatura.factor}}</span></ion-label>
+        <ion-input  (ionChange)="ionChangeValor($event,'temperatura')" [debounce]="250" [(ngModel)]="register['valor_temperatura']" placeholder="Ingrese temperatura"  type="number"></ion-input>
+        <ion-button fill="outline" slot="end"  (click)="openChart('temperatura')" style="height: 75%;"><ion-icon name="pulse-outline" slot="icon-only"></ion-icon></ion-button>
+
+      </ion-item>
+  
+      <ion-item>
+        <ion-icon  slot="start"  name="{{templateQty.ph.icon}}" color="{{templateQty.ph.color}}" ></ion-icon>   
+        <ion-label position="stacked" style="float: left"  color="primary">pH [u.pH]  <span style="float: right; ">{{templateQty.ph.factor}}</span></ion-label>
+       
+        <ion-input (ionChange)="ionChangeValor($event,'ph')" [debounce]="250"   [(ngModel)]="register['valor_ph']" placeholder="Ingrese pH"  type="number"></ion-input>
+        <ion-button fill="outline" slot="end"  (click)="openChart('ph')" style="height: 75%;"><ion-icon name="pulse-outline" slot="icon-only"></ion-icon></ion-button>
+
+      </ion-item>
+  
+      <ion-item>
+        <ion-icon  slot="start"  name="{{templateQty.conductividad.icon}}" color="{{templateQty.conductividad.color}}" ></ion-icon>   
+        <ion-label position="stacked"  color="primary">Conductividad [μS/cm]   <span style="float: right; ">{{templateQty.conductividad.factor}}</span></ion-label>
+        <ion-input (ionChange)="ionChangeValor($event,'conductividad')"  [debounce]="250"  [(ngModel)]="register['valor_conductividad']"  placeholder="Ingrese conductividad"   type="number"></ion-input>
+        <ion-button fill="outline" (click)="openChart('conductividad')" slot="end" style="height: 75%;"><ion-icon name="pulse-outline" slot="icon-only"></ion-icon></ion-button>
+
+      </ion-item>
+  
+      <ion-item>  
+        <ion-icon slot="start"   name="{{templateQty.oxigeno.icon}}" color="{{templateQty.oxigeno.color}}"  ></ion-icon> 
+        <ion-label position="stacked"  color="primary">Oxigeno Disuelto [mg/l] <span style="float: right; "  text-right>{{templateQty.oxigeno.factor}}</span></ion-label>
+        <ion-input  (ionChange)="ionChangeValor($event,'oxigeno')"  [debounce]="250"   [(ngModel)]="register['valor_oxigeno']"   placeholder="Ingrese oxigeno disuelto"  type="number"></ion-input>
+        <ion-button fill="outline" (click)="openChart('oxigeno')" slot="end" style="height: 75%;"><ion-icon name="pulse-outline" slot="icon-only"></ion-icon></ion-button>
+
+      </ion-item>
+
+      <ion-item-divider color="light">
+        <ion-label color='dark'>
+        <h2>Turbiedad</h2>
+        </ion-label>
+      </ion-item-divider>
+  
+      
+      <ion-item>
+        <ion-icon  slot="start" color="primary"   name="chevron-forward"  ></ion-icon>   
+        <ion-label class="nun_blk" position="stacked"  color="primary" >Turbidimetro</ion-label>
+        <ion-select class="nun_blk" placeholder="Seleccione equipo"  [(ngModel)]="register['equipo_turbidiometro']" okText="OK" cancelText="Cancelar">
+          <ion-select-option value='1' > Equipo  [GP-S-880]</ion-select-option>      
+          </ion-select>
+      </ion-item> 
+  
+
+
+      <ion-item> 
+                   
+        <ion-icon slot="start"  name="{{templateQty.turbiedad.icon}}" color="{{templateQty.turbiedad.color}}"  ></ion-icon>  
+        <ion-label position="stacked"  color="primary">Turbiedad [NTU] <span style="float: right; " >{{templateQty.turbiedad.factor}}</span></ion-label>
+        <ion-input (ionChange)="ionChangeValor($event,'turbiedad')"  [debounce]="250" [(ngModel)]="register['valor_turbiedad']" placeholder="Ingrese turbiedad"   type="number"></ion-input>
+        <ion-button color="primary"  (click)="openChart('turbiedad')" fill="outline" slot="end" style="height: 75%;"><ion-icon name="pulse-outline" slot="icon-only"></ion-icon></ion-button>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-grid>
+      <ion-button expand="block" fill="outline" (click)="presentAlertConfirm()" >Guardar &nbsp;<ion-icon name="server-outline"></ion-icon> </ion-button>
+
+      <ion-row>
+
+ <!--<ion-button color="primary" fill="outline" expand="block" (click)="presentAlertConfirm()" >Guardar &nbsp;<ion-icon name="server-outline"></ion-icon> </ion-button>-->
+
+        
+      <!--
+          <ion-col>
+          <div> <ion-button color="primary" fill="outline" expand="block" (click)="presentAlertConfirm()" >Guardar &nbsp;<ion-icon name="server-outline"></ion-icon> </ion-button></div>
+        </ion-col>
+       -->
+        <!--
+             <ion-col>
+          <div> <ion-button color="primary" fill="outline" expand="block" (click)="reset()" >Resetear 1 &nbsp;<ion-icon name="refresh-circle-outline"></ion-icon> </ion-button></div>
+        </ion-col>
+        -->
+     
+
+      </ion-row>     
+    </ion-grid>
+  
+    
+    
+
+  </ion-card>
+
+  
+
+
+  
+  
+
+</ion-content>

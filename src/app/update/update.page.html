@@ -1,0 +1,110 @@
+<style>
+  .badge-one {
+  position: absolute;
+  top: 0px;
+  right: -5px;
+  font-size: 0.6em;
+  --padding-start: 5px;
+  --padding-end: 5px;
+}
+
+.badge-two {
+  position: absolute;
+  top: 0px;
+  right: -5px;
+  font-size: 0.6em;
+  --padding-start: 3px;
+  --padding-end: 3px;
+}
+</style>
+<ion-header>
+  <ion-toolbar  color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button  ></ion-menu-button>
+      </ion-buttons>
+    <ion-title>
+      Actualizaciones
+    </ion-title>
+
+    <ion-buttons slot="end"  >
+
+      <ion-button class="badge-button" (click)="resolveDNS()" >
+        <ion-icon  name="server-outline">
+        </ion-icon>
+        <ion-badge class="badge-one" color="{{estatus['class']}}"><ion-icon name="{{estatus['icon']}}"></ion-icon></ion-badge>
+      </ion-button>
+      <ion-button  expand="block" (click)="presentActionSheet()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    
+    </ion-buttons>
+   
+  </ion-toolbar>
+  <ion-searchbar style="background-color: #3880ff;" placeholder="Buscar"
+                 inputmode="text"
+                 (ionChange)="onsearchChange($event)"
+                 [debounce]="250"
+                 animated
+  ></ion-searchbar >
+  <ion-item color="light">
+   
+    <fa-icon slot="start"  [icon]="['fas', 'cloud-download-alt']" color="medium" style="color: #3880ff" ></fa-icon>   
+    <ion-label class="bold_g" color="medium">Estaciones Actualizadas </ion-label>
+    <ion-badge slot="end" color="success" class="">{{monitoreospp.length}}</ion-badge>
+   <!--<ion-note slot="end" color="success">{{monitoreospp.length}}</ion-note>-->
+    
+ 
+ 
+  </ion-item>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+
+  <div *ngIf="!monitoreospp|| monitoreospp.length === 0" >
+    <div class="ion-text-center" color="primary" style="padding-top: 70px;" >
+    
+      <h3><ion-icon slot="icon-only" color="medium" name="alert-circle-outline" style=" font-size: 64px;text-align: center; vertical-align: middle;"></ion-icon> 
+      </h3>
+      <ion-text color="medium">
+        <h6>Sin Datos</h6>
+      </ion-text>
+   </div>      
+ </div>
+
+ <div *ngIf=" monitoreospp.length > 0" >
+  <ion-list style="padding-top: 0;">   
+    <ion-item-sliding *ngFor="let data of monitoreospp | filtro :textoBuscar">
+      <ion-item-options side="start">         
+        <ion-item-option color="warning" (click)="presentAlertConfirm(data.estacion)" ><ion-icon slot="icon-only" name="trash-outline"></ion-icon></ion-item-option>
+      </ion-item-options>  
+      <ion-item button > 
+        <ion-icon slot="start" name="location-sharp" color="primary"  ></ion-icon>   
+         <ion-label>
+
+          <h3 color="dark">{{ data.estacion}}    <span style="float:right">Act: {{ data.fecha }}</span>         </h3> 
+          <p> Cantidad:   <span style="float:right"> {{ data.cantidad }} Muestras </span> </p>   
+                 
+       </ion-label>   
+         
+     </ion-item>
+     </ion-item-sliding> 
+   </ion-list>  
+
+ </div>
+
+ 
+
+  
+
+  
+  
+    
+
+    
+     
+</ion-content>

@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar  color="primary" >
+    <ion-buttons color="" slot="start">
+      <ion-back-button color="" defaultHref="/sendata"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Handshake
+    </ion-title>
+    <ion-buttons slot="end" color=""  >
+      <ion-button>
+       <!--<ion-icon color="" name="trash"></ion-icon>--> 
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  class="nun_blk">
+
+ 
+    <div class="ion-text-center" color="primary" style="padding-top: 70px;" >
+      <h3><ion-icon slot="icon-only" color="success" name="checkmark-done-circle-outline" style=" font-size: 64px;text-align: center; vertical-align: middle;"></ion-icon> 
+      </h3>
+     
+      <ion-item style="padding-top: 30px;" >         
+        <ion-icon name="server-outline"  color="primary" slot="start"></ion-icon>      
+        <ion-label>
+        <h2>Server IP</h2>
+        <p> {{ip}} </p>
+      </ion-label>          
+    </ion-item>
+    <BR>
+
+    <ion-item>         
+      <ion-icon name="time-outline" color="primary" slot="start"></ion-icon>
+      <ion-label>
+      <h2>Time Received</h2>
+      <p>{{date}}</p>
+    </ion-label>          
+  </ion-item>
+  <BR>
+  <ion-item>         
+    <ion-icon name="card-outline" color="primary"  slot="start" ></ion-icon>
+    <ion-label>
+    <h2>ACK Code</h2>
+    <p>6456765767</p>
+  </ion-label>          
+</ion-item>
+
+      
+      
+      
+  
+   </div>      
+
+
+</ion-content>

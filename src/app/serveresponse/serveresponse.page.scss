@@ -1,0 +1,62 @@
+@font-face {
+    font-family: 'nuni-black';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../../assets/fonts/Quicksand/static/Quicksand-Regular.ttf');
+  }
+  @font-face {
+    font-family: 'nuni-black';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../../assets/fonts/Quicksand/static/Quicksand-Regular.ttf');
+  }
+  @font-face {
+    font-family: 'nuni-black';
+    font-style: normal;
+    font-weight: medium;
+    src: url('../../assets/fonts/Quicksand/static/Quicksand-Regular.ttf');
+  }
+  
+  * {
+  
+  
+    font-family: 'nuni-black';
+  
+  
+  }
+  #container {
+    text-align: center;  font-family: 'nuni-black';
+  
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  #container strong {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  #container p {
+    font-size: 16px;
+    line-height: 22px;
+  
+    color: #8c8c8c;
+  
+    margin: 0;
+  }
+  
+  #container a {
+    text-decoration: none;
+  }
+  .bold{
+    font-weight: 700;
+    font-family: 'nuni-black';
+    color:#5260ff;
+  }
+  .nun_blk{
+    font-family: 'nuni-black' !important;
+  }
+  

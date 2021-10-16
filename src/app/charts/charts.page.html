@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar  color="primary" >
+
+    <ion-buttons slot="start" color=""  >
+      <ion-button (click)="exitModal()">
+
+        <ion-icon name="arrow-back-outline"></ion-icon>
+     
+      </ion-button>
+    </ion-buttons>
+   
+    
+    <ion-title>
+      {{ estacion }}  
+        </ion-title>
+    <ion-buttons slot="end" color=""  >
+      <ion-button (click)="exitModal()">
+     
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<style>
+  :root {
+    --ion-safe-area-top: 20px;
+    --ion-safe-area-bottom: 22px;
+  }
+
+  ion-col > div {
+  
+    border: solid 1px #ddd;
+    padding: 5px;
+  }
+  .primary{
+
+    background-color: #28ba62;
+    color : white;
+    font-size: small;
+    text-align: center;    
+    border-radius: 0.3em !important;  
+    border-width: .04em !important; 
+    border-style:solid !important;
+    
+  }
+  .error{
+
+    background-color: #eb445a;
+    color : white;
+    font-size: small;
+    text-align: center;    
+    border-radius: 0.3em !important;    
+    border-width: .04em !important; 
+    border-style:solid !important;
+   
+
+  }
+  .gold{
+    background-color:#5260ff;
+    color :white;
+    font-size: small;
+    text-align: center;    
+    border-radius: 0.3em !important;    
+    border-width: .04em !important; 
+    border-style:solid !important;
+  }
+  ion-icon {
+        font-size: 20px; 
+       
+    }
+</style>
+
+<ion-content class="nun_blk" >
+
+  
+  
+        <div id="highcharts_result" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+       
+          
+        <ion-item>
+          <ion-icon  slot="start"  name="caret-forward-outline"  ></ion-icon>   
+          <ion-label position="stacked" color="primary" class="nun_blk" >{{titleyAxis}}</ion-label>
+         <!--<ion-input [value]="name" type="text"></ion-input>-->
+         <ion-input (ionChange)="ionChangeValor($event)"  [debounce]="250" type="number" [value]="name" (input)="setQuantity($event.target.value)"></ion-input>
+          <ion-button (click)="updateChart()" fill="solid" slot="end"  style="height: 75%;"><ion-icon name="pulse-outline" slot="icon-only"></ion-icon></ion-button>
+  
+        </ion-item>
+
+        <ion-grid>
+
+          <ion-row style="height: 50px;">
+            <ion-col color="tertiary" style=''>
+              <div   class="{{class1}}"  > <ion-icon name="{{icon1}}"></ion-icon>  <br> <span style="font-size: 11px;"> Error 10% [{{factor}}]</span> <br> </div>
+            </ion-col>
+            <ion-col>
+              <div class="{{class2}}"   > <ion-icon name="{{icon2}}" ></ion-icon>  <br> <span style="font-size: 11px;">Error 20% [{{factor}}]</span> <br>  </div>
+            </ion-col>
+            <ion-col color="primary">
+              <div class="{{class3}}" > <ion-icon name="{{icon3}}"></ion-icon> <br> <span style="font-size: 11px;"> Error 50% [{{factor}}]</span> <br>  </div>
+           
+           </ion-col>
+          </ion-row>
+      
+        </ion-grid>
+
+        <ion-grid>
+
+          <ion-row style="height: 50px;">
+            <ion-col color="tertiary" >
+              <div   class="gold"   > <ion-icon name="trending-down-outline"></ion-icon> <br> Min :<span style="font-size: 11px;"> {{ min }} </span> <br> </div>
+            </ion-col>
+            <ion-col>
+              <div  class="gold"    > <span style="margin-bottom: 10px;"></span><ion-icon name="trending-up-outline"></ion-icon><br> Max : <span style="font-size: 11px;"> {{ max }} </span> <br>  </div>
+            </ion-col>
+            <ion-col color="primary">
+              <div  class="gold"    > <ion-icon name="stats-chart-outline"></ion-icon> <br> Prom : <span style="font-size: 11px;"> {{ avg }} </span> <br>  </div>
+           
+           </ion-col>
+          </ion-row>
+      
+        </ion-grid>
+    
+        
+    
+    
+
+
+ 
+</ion-content>

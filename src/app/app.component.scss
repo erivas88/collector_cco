@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'nuni-black';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../assets/fonts/Quicksand/static/Quicksand-Regular.ttf');
+  }
+  @font-face {
+    font-family: 'nuni-black';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../assets/fonts/Quicksand/static/Quicksand-Bold.ttf');
+  }
+  @font-face {
+    font-family: 'nuni-black';
+    font-style: normal;
+    font-weight: medium;
+    src: url('../assets/fonts/Quicksand/static/Quicksand-Medium.ttf');
+  }
+  *{
+    font-family: 'nuni-black';
+  }
