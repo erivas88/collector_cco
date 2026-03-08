@@ -1,164 +1,84 @@
 <ion-header>
-  <ion-toolbar  color="primary">
+  <ion-toolbar color="primary">
       <ion-buttons slot="start">
-        <ion-menu-button  ></ion-menu-button>
+          <ion-menu-button></ion-menu-button>
       </ion-buttons>
-    <ion-title>
-      Gráficos
-    </ion-title>
-    <ion-buttons slot="end"  >
-      <ion-button  expand="block" >
-    
-        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-   
+      <ion-title>
+          Gráficos
+      </ion-title>
+      <ion-buttons slot="end">
+          <ion-button expand="block">
+              <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+      </ion-buttons>
   </ion-toolbar>
- 
 </ion-header>
-<ion-content >
+<ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
+      <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+  <!--<div id="highcharts_result_historic" style="min-width: 310px; max-width: 800px; height: 450px; margin: 0 auto;"></div>-->
 
-  <div id="highcharts_result_historic" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto">
+  <div id="highcharts_result_historic" style="width: 100%; height: 80%; margin: 0 auto;"></div> 
 
-    
-
-  </div>
- 
-   <!--<div ></div>--> 
-
-
-    <ion-segment [(ngModel)]="selectedView">
+  <ion-segment [(ngModel)]="selectedView">
       <ion-segment-button value="devs">
-        <ion-label> <ion-icon name="pulse"></ion-icon> Graficar</ion-label>
+          <ion-label> <ion-icon name="pulse"></ion-icon> Graficar</ion-label>
       </ion-segment-button>
       <ion-segment-button value="products">
-        <ion-label> <ion-icon name="cog"></ion-icon> Opciones</ion-label>
+          <ion-label> <ion-icon name="cog"></ion-icon> Opciones</ion-label>
       </ion-segment-button>
-    </ion-segment>
+  </ion-segment>
 
-    <div [ngSwitch]="selectedView">
-
+  <div [ngSwitch]="selectedView">
       <div *ngSwitchCase="'devs'">
+          <ion-list style="padding-top: 0;">
+          <ion-item color="light" class="nun_blk">
+                  <ion-label color="primary"> Estaciones </ion-label>
+                  <ion-select
+                      multiple="true"
+                      [(ngModel)]="estaciones_selct"
+                      (ionChange)="fillChart(estaciones_selct,parametros_selct)"
+                      [selectedText]="textToDisplay"
+                      placeholder="Seleccione"
+                      okText="Graficar"
+                      cancelText="Cancelar"
+                      multilple="true"
+                  >
+                      <ion-select-option style="font-size: 11px;" *ngFor="let data of estaciones | async" value="{{ data.name }}">{{ data.name }}</ion-select-option>
+                  </ion-select>
+              </ion-item>
 
-        <ion-list style="padding-top: 0">
-          
-
-         <!-- <ion-item color="light">
-            <ion-label  color="tertiary" >
-            Estaciones
-            </ion-label >
-            <ionic-selectable
-            [(ngModel)]="SelectStations1"
-             [items]="estaciones"
-             searchPlaceholder="Buscar estación"
-             clearButtonText="Limpiar"
-              itemValueField="id_estacion" 
-              itemTextField="estacion"
-            
-          
-              [canSearch]="true"
-              [canClear]="true"
-              [isMultiple]="true" headerColor="tertiary"
-              (onChange)="portChange($event,SelectParamet,SelectProgram)"
-           
-             
-              >   
-              
-              <ng-template ionicSelectableCloseButtonTemplate>
-                <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
-              </ng-template>
-
-              <ionic-selectable>
-                <ng-template ionicSelectableSearchFailTemplate>
-                  <div class="ion-padding">
-                    Sin Resultados
-                  </div>
-                </ng-template>
-              </ionic-selectable>
-
-              <ng-template ionicSelectablePlaceholderTemplate>
-                Seleccione
-              </ng-template>       
-
-             
-        
-        
-           
-            </ionic-selectable>
-          </ion-item>
-        -->
-
-
-         <ion-item color="light" class="nun_blk" >
-            <ion-label color="primary" >  Estaciones </ion-label>
-            <ion-select multiple="true" [(ngModel)]="estaciones_selct"    (ionChange)="fillChart(estaciones_selct,parametros_selct)" [selectedText]="textToDisplay"   placeholder="Seleccione"  okText="Graficar" cancelText="Cancelar" multilple="true">        
-            <ion-select-option style="font-size: 11px;" *ngFor="let data of estaciones | async" value="{{ data.name }}"  >{{ data.name }}</ion-select-option>
-            </ion-select>
-          </ion-item>
-
-          <ion-item color="light" class="nun_blk" >
-            <ion-label color="primary"  >  Parámetros </ion-label>
-            <ion-select multiple="true"  [(ngModel)]="parametros_selct"  (ionChange)="fillChart(estaciones_selct,parametros_selct)" placeholder="Seleccione" [selectedText]="textToDisplay1"  okText="Graficar" cancelText="Cancelar" multilple="true">
-              <ion-select-option style="font-size: 11px;" *ngFor="let data of parametros | async" value="{{ data.value }}"  >{{ data.name }}</ion-select-option>    
-            </ion-select>
-          </ion-item>
-
-      
-         
-         
-      
-          <ion-item  color="light">
-            <ion-label color="tertiary" > Normas</ion-label>
-            <ion-select (ionChange)="fillChart()" placeholder="Seleccione"  okText="Graficar" cancelText="Cancelar" multiple="true" disabled>
-              <ion-select-option  ></ion-select-option>              
-            </ion-select>
-      
-           
-          </ion-item>
-
-
-     
-        
-        
-        </ion-list>
-
-        
-
-
+              <ion-item color="light" class="nun_blk">
+                  <ion-label color="primary"> Parámetros </ion-label>
+                  <ion-select
+                      multiple="true"
+                      [(ngModel)]="parametros_selct"
+                      (ionChange)="fillChart(estaciones_selct,parametros_selct)"
+                      placeholder="Seleccione"
+                      [selectedText]="textToDisplay1"
+                      okText="Graficar"
+                      cancelText="Cancelar"
+                      multilple="true"
+                  >
+                      <ion-select-option style="font-size: 11px;" *ngFor="let data of parametros | async" value="{{ data.value }}">{{ data.name }}</ion-select-option>
+                  </ion-select>
+              </ion-item>
+          </ion-list>
       </div>
 
       <div *ngSwitchCase="'products'">
+          <ion-list style="padding-top: 0;">
+              <ion-item color="light">
+                  <ion-label color="primary"> Eje Secundario</ion-label>
+                  <ion-toggle slot="end" [(ngModel)]="estado" name="blackberry" color="primary" (ionChange)="SecondaryAxis($event)" checked="{{estado}}"></ion-toggle>
+              </ion-item>
 
-        <ion-list style="padding-top: 0" >
-
-         
-
-
-          <ion-item color="light" >
-            <ion-label color="primary" > Hitos </ion-label>
-            <ion-toggle   slot="end" [(ngModel)]="hitos"   color="primary" (ionChange)="change_ht3($event)" checked="{{hitos}}"></ion-toggle>
-           
-          </ion-item>
-
-          <ion-item color="light"  >
-            <ion-label color="primary"> Eje Secundario</ion-label>
-            <ion-toggle slot="end" [(ngModel)]="estado"  name="blackberry" color="primary" (ionChange)="SecondaryAxis($event)" checked="{{estado}}" ></ion-toggle>
-          </ion-item>          
-
-          <ion-item  color="light"   style="padding-left: 0">
-            <ion-label  color="primary" >Invert. Eje1</ion-label>
-            <ion-toggle slot="end" [(ngModel)]="inverted1"  name="blackberry" color="primary" (ionChange)="axis_1($event)" checked="{{inverted1}}"></ion-toggle>
-          </ion-item>
-              
-
-        
-                    
-        </ion-list>
-
+              <ion-item color="light" style="padding-left: 0;">
+                  <ion-label color="primary">Invert. Eje1</ion-label>
+                  <ion-toggle slot="end" [(ngModel)]="inverted1" name="blackberry" color="primary" (ionChange)="axis_1($event)" checked="{{inverted1}}"></ion-toggle>
+              </ion-item>
+          </ion-list>
       </div>
-
-
-    </div>
+  </div>
+</ion-content>

@@ -8,6 +8,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 
 
 
+
  
 
 @Component({
@@ -94,12 +95,12 @@ export class MonitoreoPage implements OnInit {
                     this.products = this.db.getProducts();
                     this.estaciones = this.db.getStations();
                     this.programas = this.db.getProgramas();
+                    console.log(this.programas);  
                     this.equipos_caudal = this.db.getEquipoCaudal();
                     this.equipos_nivel = this.db.getEquipoNivel();
                     this.equipos_multiparametro = this.db.getEquipoMultiparametro(); 
-
                     this.db.getProgramas().subscribe((data) => {
-                      this.progrmasdb= data;
+                      this.progrmasdb = data;
                     }, (err) => {
                     console.log(err);
                     });
@@ -117,49 +118,73 @@ export class MonitoreoPage implements OnInit {
     
 
     this.db.getMonitoreo(this.id_monitoreo).then(data => {
-      this.registrosdb= data;
 
+
+
+      this.registrosdb= data;
+       console.log('dataArray :'+data);
+       console.log('dataArray: ' + JSON.stringify(data));
       let  programa = this.register['programa'];
-    this.isReadonly=this.register['send'];
-    this.register['send'] = this.registrosdb.ischecked;
-    this.register['estacion'] = this.registrosdb.estacion;
-    this.register['valor_nivel'] = this.registrosdb.valor_nivel;     
-    this.register['valor_caudal'] =this.registrosdb.valor_caudal;    
-    this.register['valor_temperatura']=this.registrosdb.valor_temperatura;
-    this.register['valor_ph']=this.registrosdb.valor_ph;  ;
-    this.register['valor_conductividad']=this.registrosdb.valor_conductividad;  ;
-    this.register['valor_oxigeno']=this.registrosdb.valor_oxigeno;  ;
-    this.register['valor_turbiedad']=this.registrosdb.valor_turbiedad;
-    this.register['programa'] =this.registrosdb.programa;   
-    this.register['equipo_caudal']= this.registrosdb.equipo_caudal;
-    this.register['equipo_nivel']=this.registrosdb.equipo_nivel;
-    this.register['equipo_multiparametro']= this.registrosdb.equipo_multiparametro;
-    this.register['equipo_turbidiometro']= this.registrosdb.equipo_turbiedad;
-    this.register['datatime'] = this.registrosdb.fecha + " " + this.registrosdb.hora; 
-    this.register['latitud'] = this.registrosdb.latitud; 
-    this.register['longitud'] = this.registrosdb.longitud; 
+      this.isReadonly=this.register['send'];
+      this.register['send'] = this.registrosdb.ischecked;
+      this.register['estacion'] = this.registrosdb.estacion;
+      this.register['valor_nivel'] = this.registrosdb.valor_nivel;     
+      this.register['valor_caudal'] =this.registrosdb.valor_caudal;    
+      this.register['valor_temperatura']=this.registrosdb.valor_temperatura;
+      this.register['valor_ph']=this.registrosdb.valor_ph;  ;
+      this.register['valor_conductividad']=this.registrosdb.valor_conductividad;  ;
+      this.register['valor_oxigeno']=this.registrosdb.valor_oxigeno;  ;
+      this.register['valor_turbiedad']=this.registrosdb.valor_turbiedad;
+     // this.register['programa'] =this.registrosdb.programa;
+     // this.register['programa'] = this.registrosdb.programa;   
+     // console.log('programa almacenado es :'+this.registrosdb.programa);
+    
+      this.register['programa'] = parseInt(this.registrosdb.programa, 10);
+      console.log('programa almacenado es :'+   this.register['programa']);
+      this.register['equipo_caudal']= this.registrosdb.equipo_caudal;
+      this.register['equipo_nivel']=this.registrosdb.equipo_nivel;
+      this.register['equipo_multiparametro']= this.registrosdb.equipo_multiparametro;
+      this.register['equipo_turbidiometro']= this.registrosdb.equipo_turbiedad;
+      this.register['datatime'] = this.registrosdb.fecha + " " + this.registrosdb.hora; 
+      this.register['latitud'] = this.registrosdb.latitud; 
+      this.register['longitud'] = this.registrosdb.longitud; 
+      this.register['profundidad'] = this.registrosdb.profundidad;
+      /**Nuevos Registros JVA**/
+      this.register['observacion'] = this.registrosdb.observacion;
+      this.register['id_laboratorio'] = this.registrosdb.id_laboratorio;
+      this.register['inspector'] = this.registrosdb.inspector; 
+      /**Nuevos Registros JRK**/
+      /*
+      this.register['metodo'],this.register['tipo_agua'],this.register['tipo_nivel'],this.register['hora_nivel']
+       */
+      this.register['metodo'] = this.registrosdb.metodo;
+      this.register['tipo_agua'] = this.registrosdb.tipo_agua;
+      this.register['tipo_nivel'] = this.registrosdb.tipo_nivel;
+      this.register['hora_nivel'] = this.registrosdb.hora_nivel; 
+     /**Nuevos Registros RTS**/
+      this.register['hidroquimico'] = this.registrosdb.hidroquimico;
+      this.register['isotopico'] = this.registrosdb.isotopico;
+      this.register['fallido'] = this.registrosdb.fallido;
+      
       console.log(this.registrosdb);
       console.log(this.register);
-
       this.getHistoric(this.registrosdb.estacion);
 
+     
     });
 
     
 
-    console.log(this.db.getMonitoreo(1));
-   
+    console.log(this.db.getMonitoreo(1));   
     this.MyDefaultYearIdValue = "1" ;
     this.compareWith = this.compareWithFn;
-    console.log(this.programas);
-
-  
-  console.log(this.id_monitoreo);
-   //console.log(this.registrosdb.id);
-   //console.log(this.registrosdb['id']);
+    console.log(this.programas);  
+    console.log(this.id_monitoreo);
+    this.isReadonly=this.register['send'];
+   
 
 
-   this.isReadonly=this.register['send'];
+   
 
    
 
@@ -186,6 +211,46 @@ export class MonitoreoPage implements OnInit {
     })   
 
   } 
+
+
+
+  shouldDisplayWaterSection(): boolean {
+    return this.register['tipo_agua'] == 1 || this.register['tipo_agua'] == '';
+  }
+
+
+  async limitarLongitud(event: any) {
+    const maxLength = 10;
+
+    if (event.target.value.length > maxLength) {
+        event.target.value = event.target.value.slice(0, maxLength);
+
+        const alert = await this.alertController.create({
+            header: 'Advertencia',
+            message: 'La longitud máxima permitida es de 10 caracteres.',
+            buttons: ['OK']
+        });
+
+        await alert.present();
+    }
+}
+
+
+async limitarLongitudTXT(event: any) {
+  const maxLength = 50;
+
+  if (event.target.value.length > maxLength) {
+      event.target.value = event.target.value.slice(0, maxLength);
+
+      const alert = await this.alertController.create({
+          header: 'Advertencia',
+          message: 'La longitud máxima permitida es de 50 caracteres.',
+          buttons: ['OK']
+      });
+
+      await alert.present();
+  }
+}
 
   fill(data)
   {
@@ -231,7 +296,7 @@ export class MonitoreoPage implements OnInit {
             else
             {
               this.templateQty[entry]['color']='success';
-              this.templateQty[entry]['icon']='checkmark-circle-outline';
+              this.templateQty[entry]['icon']='checkmark-circle';
     
             }  
     
@@ -240,7 +305,7 @@ export class MonitoreoPage implements OnInit {
         if(historicValue.trim()=='')
         {
             this.templateQty[entry]['color']='success';
-            this.templateQty[entry]['icon']='checkmark-circle-outline';
+            this.templateQty[entry]['icon']='checkmark-circle';
             this.templateQty[entry]['factor'] ='-'
     
         }
@@ -298,6 +363,25 @@ export class MonitoreoPage implements OnInit {
      this.register['valor_turbiedad']=null;
      this.register['equipo_multiparametro']=null;
 
+
+     //se agregan 3 parametros al formulario
+     this.register['observacion']=null;
+     this.register['id_laboratorio']=null;
+     this.register['inspector']=null;
+
+    //se agregan 4 parametros al formulario
+     this.register['metodo']=null;
+     this.register['tipo_agua']=null;
+     this.register['tipo_nivel']=null;
+     this.register['hora_nivel']=null;
+
+    //se agregan 4 parametros al formulario
+     this.register['hidroquimico']=null;
+     this.register['isotopico']=null;
+     this.register['fallido']=null;
+
+ 
+
   }
   updateMonitoreo()
   {
@@ -314,7 +398,20 @@ export class MonitoreoPage implements OnInit {
                       valor_oxigeno :this.register['valor_oxigeno'],
                       equipo_turbidimetro :this.register['equipo_turbidiometro'],
                       valor_turbiedad :this.register['valor_turbiedad'],
-                      id_monitoreo :  this.id_monitoreo  }]
+                      profundidad :this.register['profundidad'],
+                      observacion : this.register['observacion'],
+                      id_laboratorio: this.register['id_laboratorio'],
+                      inspector : this.register['inspector'],
+                      id_monitoreo :  this.id_monitoreo,
+                      metodo: this.register['metodo'],
+                      tipo_agua: this.register['tipo_agua'],
+                      tipo_nivel : this.register['tipo_nivel'],
+                      hora_nivel : this.register['hora_nivel'],
+                      datetime : this.register['datatime'],
+                      hidroquimico : this.register['hidroquimico'],
+                      isotopico : this.register['isotopico'],
+                      fallido : this.register['fallido'],
+                      }]
    
     this.db.updateDataMonitoreo(updatedata[0]);  
   }
@@ -477,7 +574,7 @@ export class MonitoreoPage implements OnInit {
           {
             this.templateQty[parameter]['factor'] = factor.toFixed(1);
             this.templateQty[parameter]['color']='success';
-            this.templateQty[parameter]['icon']='checkmark-circle-outline';
+            this.templateQty[parameter]['icon']='checkmark-circle';
   
           }
 
@@ -493,7 +590,7 @@ export class MonitoreoPage implements OnInit {
     if(historicValue.trim()=='')
     {
         this.templateQty[parameter]['color']='success';
-        this.templateQty[parameter]['icon']='checkmark-circle-outline';
+        this.templateQty[parameter]['icon']='checkmark-circle';
         this.templateQty[parameter]['factor'] ='-'
 
     }

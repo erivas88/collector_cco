@@ -1,0 +1,86 @@
+<ion-header translucent="true">
+  <ion-toolbar  color="primary">
+     <ion-buttons *ngIf="!showSearchbar" slot="start">
+        <ion-menu-button></ion-menu-button>
+     </ion-buttons>
+     <ion-segment  [(ngModel)]="selectedView" >
+     <ion-segment-button value="estaciones">
+        ESTACIONES
+     </ion-segment-button>
+     <ion-segment-button value="create">
+        AGREGAR
+     </ion-segment-button>
+     </ion-segment>   
+  </ion-toolbar>
+  <ion-searchbar *ngIf="selectedView === 'estaciones'" style="background-color: #3880ff;" placeholder="Buscar"
+   inputmode="text"   (ionChange)="onsearchChange($event)" [debounce]="250" animated>
+  </ion-searchbar>
+</ion-header>
+<ion-content  class="nun_blk">
+  <div [ngSwitch]="selectedView">
+     <div *ngSwitchCase="'estaciones'">
+        <div *ngIf="! estaciones || estaciones.length === 0" >
+           <div class="ion-text-center" color="primary" style="padding-top: 70px;" >
+              <h3>
+                 <ion-icon slot="icon-only" color="medium" name="location-outline" style=" font-size: 64px;text-align: center; vertical-align: middle;"></ion-icon>
+              </h3>
+              <ion-text color="medium">
+                 <h6>Sin Estaciones</h6>
+              </ion-text>
+           </div>
+        </div>
+        <div *ngIf="estaciones.length > 0">
+           <ion-list style="padding-top: 0;">
+              <ion-item-sliding *ngFor="let data of estaciones "  style="padding-top: 0;">
+                 <ion-item-options side="start">
+                    <ion-item-option color="warning" >
+                       <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                    </ion-item-option>
+                 </ion-item-options>
+                 <ion-item>
+                    <ion-icon slot="start" name="location-outline" color="primary"  ></ion-icon>
+                    <ion-label>
+                       <h3 color="dark">  {{ data.nombre }}  </h3>
+                       <p>{{ data.nombre }} </p>
+                    </ion-label>
+                 </ion-item>
+                 <ion-item-options side="end">
+                    <ion-item-option>
+                       <ion-icon  color="danger" slot="icon-only" name="thumbs-down-sharp" ></ion-icon>
+                    </ion-item-option>
+                    <ion-item-option>
+                       <ion-icon  color="success" slot="icon-only"  name="thumbs-up-sharp" ></ion-icon>
+                    </ion-item-option>
+                 </ion-item-options>
+              </ion-item-sliding>
+           </ion-list>
+        </div>
+     </div>
+     <div *ngSwitchCase="'create'">
+        <ion-item-divider color="light">
+           <ion-icon  slot="start"   name="location-outline"></ion-icon>
+           <ion-label color='dark' style="font-weight: bold;">
+              <h2>Datos de Estación </h2>
+           </ion-label>
+        </ion-item-divider>
+        <ion-item class="nun_blk">
+           <ion-icon slot="start" [name]="register['estacion'] ? 'checkmark-circle' : 'close-circle'" [color]="register['estacion'] ? 'success' : 'light'"></ion-icon>
+           <ion-label class="nun_blk" position="stacked" color="primary" >Nombre </ion-label>
+           <ion-input   [(ngModel)]="register['estacion']"  placeholder="Ingrese Nombre " ></ion-input>  
+        </ion-item>
+        <ion-item class="nun_blk">
+           <ion-icon slot="start" [name]="register['programa'] ? 'checkmark-circle' : 'close-circle'" [color]="register['programa'] ? 'success' : 'light'"></ion-icon>
+           <ion-label class="nun_blk" position="stacked" color="primary" >Programa</ion-label>
+           <ion-select  [(ngModel)]="register['programa']"  placeholder="Seleccione programa"  okText="Aceptar" cancelText="Cancelar">
+           <ion-select-option style="font-size: 11px;" *ngFor="let data of programas | async" value=" {{ data.id }}"  >{{ data.name }}</ion-select-option>
+           </ion-select>
+        </ion-item>
+        <ion-grid>
+           <ion-button size="default" expand="block" fill="outline" color="success" (click)="presentAlertConfirm()" >
+              Guardar &nbsp;
+              <ion-icon name="server-outline"></ion-icon>
+           </ion-button>
+        </ion-grid>
+     </div>
+  </div>
+</ion-content>

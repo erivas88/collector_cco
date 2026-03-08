@@ -1,164 +1,175 @@
 <style>
-  .badge-one {
-  position: absolute;
-  top: 0px;
-  right: -5px;
-  font-size: 0.6em;
-  --padding-start: 5px;
-  --padding-end: 5px;
-}
+   .badge-one {
+       position: absolute;
+       top: 0px;
+       right: -5px;
+       font-size: 0.6em;
+       --padding-start: 5px;
+       --padding-end: 5px;
+   }
 
-.badge-two {
-  position: absolute;
-  top: 0px;
-  right: -5px;
-  font-size: 0.6em;
-  --padding-start: 3px;
-  --padding-end: 3px;
-}
-.shadow-red{
-    --border-radius: 15px;
-    
-  
-}
-.center {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    width: 50%;
-  }
+   .badge-two {
+       position: absolute;
+       top: 0px;
+       right: -5px;
+       font-size: 0.6em;
+       --padding-start: 3px;
+       --padding-end: 3px;
+   }
 
-  --ion-item {
- width: 90%;
-}
+   .shadow-red {
+       --border-radius: 15px;
+   }
+
+   .center {
+       display: flex;
+       justify-content: center;
+       align-content: center;
+       align-items: center;
+       width: 50%;
+   }
+
+   --ion-item {
+       width: 90%;
+   }
+
+   /* Estilos para el contenedor principal */
+   .update-stations-container {
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       height: 100vh;
+   }
+
+   /* Estilos para el icono */
+   .icon {
+       font-size: 64px;
+       text-align: center;
+       vertical-align: middle;
+   }
+
+   /* Estilos para el contenedor del select */
+   .program-select {
+       margin-left: 30px;
+       margin-right: 30px;
+       padding-bottom: 0px;
+       background-color: #111111 !important;
+   }
+
+   /* Estilos para el select */
+   .select {
+       font-size: 11px;
+   }
+
+   /* Estilos para el contenedor del botón */
+   .button-container {
+       padding: 10px;
+   }
 </style>
 <ion-header>
-  <ion-toolbar  color="primary">
-      <ion-buttons slot="start">
-        <ion-menu-button  ></ion-menu-button>
-      </ion-buttons>
-    <ion-title>
-      Sincronizar
-    </ion-title>
-    <ion-buttons slot="end"  >
-      <ion-button  >
-
-        <ion-button class="badge-button" (click)="resolveDNS()" >
-          <ion-icon  name="server-outline">
-          </ion-icon>
-          <ion-badge class="badge-one" color="{{estatus['class']}}"><ion-icon name="{{estatus['icon']}}"></ion-icon></ion-badge>
-        </ion-button>
-    
-        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-   
-  </ion-toolbar>
- 
+   <ion-toolbar color="primary">
+       <ion-buttons slot="start">
+           <ion-menu-button></ion-menu-button>
+       </ion-buttons>
+       <ion-title>
+           Sincronizar
+       </ion-title>
+       <ion-buttons slot="end">
+           <ion-button>
+               <ion-button class="badge-button" (click)="resolveDNS()">
+                   <ion-icon name="server-outline">
+                   </ion-icon>
+                   <ion-badge class="badge-one" color="{{estatus['class']}}">
+                       <ion-icon name="{{estatus['icon']}}"></ion-icon>
+                   </ion-badge>
+               </ion-button>
+               <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+           </ion-button>
+       </ion-buttons>
+   </ion-toolbar>
 </ion-header>
+<ion-content class="nun_blk">
+   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+       <ion-refresher-content></ion-refresher-content>
+   </ion-refresher>
+   <ion-segment [(ngModel)]="selectedView">
+       <ion-segment-button value="devsi">
+           <ion-label>programas</ion-label>
+       </ion-segment-button>
+       <ion-segment-button value="devs">
+           <ion-label>Estaciones</ion-label>
+       </ion-segment-button>
+       <ion-segment-button value="products">
+           <ion-label>Muestras</ion-label>
+       </ion-segment-button>
+   </ion-segment>
+   <div [ngSwitch]="selectedView">
 
-<ion-content  class="nun_blk" >
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-
- 
-  <ion-segment [(ngModel)]="selectedView">
-    <ion-segment-button value="devsi">
-      <ion-label>programas</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="devs">
-      <ion-label>Estaciones</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="products">
-      <ion-label>Muestras</ion-label>
-    </ion-segment-button>
-  </ion-segment>
- 
-  <div [ngSwitch]="selectedView">
-
-
-    <div *ngSwitchCase="'devsi'">
-
-
-      <div class="ion-text-center" color="primary" style="padding-top: 50px;" >  
-    
-        <h3><ion-icon slot="icon-only" color="primary" name="map-outline" style=" font-size: 64px;text-align: center; vertical-align: middle;"></ion-icon> 
-        </h3>
-        <ion-text color="primary" style="padding-bottom: 20px;">
-          <h6>Actualizar Programas</h6>             
-        </ion-text>
-           
-        <ion-item  style="margin-left: 30px; margin-right: 30px; padding-bottom: 0px;" >
-
-          <ion-label class="nun_blk">Programas</ion-label>
-
-            <ion-select  [(ngModel)]="id_programa_act" placeholder="Seleccione" >        
-               <ion-select-option style="font-size: 11px;" *ngFor="let data of programas | async" value=" {{ data.id }}">{{ data.name }}</ion-select-option>        
-           </ion-select>
-
-        </ion-item> 
-
-        <div style="padding: 10px"></div>
-           <ion-button shape="round" class="shadow-red" color="primary"  (click)="get_programa()" >Obtener Programas </ion-button> 
+       <div *ngSwitchCase="'devsi'">
+           <div class="ion-text-center" color="success" style="padding-top: 50px;">
+               <h3>
+                   <ion-icon slot="icon-only" color="success" name="map-outline" style="font-size: 64px; text-align: center; vertical-align: middle;"></ion-icon>
+               </h3>
+               <ion-text color="primary" style="padding-bottom: 20px;">
+                   <h6> Actualizar Programas </h6>
+               </ion-text>
+               <!-- Tu código HTML restante -->
+               <div style="padding: 10px;"></div>
+               <ion-button size="" fill="outline" color="primary" (click)="presentPasswordPrompt()">Actualizar</ion-button>
+           </div>
        </div>
 
-      </div>
+       <div *ngSwitchCase="'devs'">
+           <div class="ion-text-center" style="padding-top: 50px;">
+               <h3>
+                   <ion-icon slot="icon-only" color="success" name="location-outline" class="icon"></ion-icon>
+               </h3>
+               <ion-text color="primary">
+                   <h6>Actualizar Estaciones</h6>
+               </ion-text>
+               <ion-item class="program-select">
+                   <ion-label class="nun_blk">Programa</ion-label>
+                   <ion-select [(ngModel)]="id_programa_act" placeholder="Seleccione" class="">
+                       <ion-select-option *ngFor="let data of programas | async" value="{{ data.id }}">{{ data.name }}</ion-select-option>
+                   </ion-select>
+               </ion-item>
+               <div class="button-container">
+                   <ion-button size="" fill="outline" color="primary" (click)="httpStations()">Actualizar</ion-button>
+               </div>
+           </div>
+       </div>
 
-    <div *ngSwitchCase="'devs'">
-      <div class="ion-text-center" color="primary" style="padding-top: 50px;" > 
-         <h3><ion-icon slot="icon-only" color="primary" name="location-outline" style=" font-size: 64px;text-align: center; vertical-align: middle;"></ion-icon> 
-        </h3>
-        <ion-text color="primary" style="padding-bottom: 20px;">
-          <h6>Actualizar estaciones</h6>
-        </ion-text>
-        <div style="padding: 10px"></div>
-           <ion-button  shape="round" class="shadow-red" color="primary" (click)="httpStations()" >Obtener Datos</ion-button> 
-     </div>      
+       <div *ngSwitchCase="'products'">
+           <div class="ion-text-center" color="primary" style="padding-top: 50px;">
+               <h3>
+                   <ion-icon slot="icon-only" color="success" name="cloud-download-outline" style=" font-size: 64px;text-align: center; vertical-align: middle;"></ion-icon>
+               </h3>
+               <ion-text color="primary">
+                   <h6>Actualizar muestras</h6>
+               </ion-text>
 
-     
-    </div>
- 
-    <div *ngSwitchCase="'products'" >
+               <ion-item class="program-select">
+                   <ion-label class="nun_blk">Programa</ion-label>
+                   <ion-select [(ngModel)]="id_programa_act" (ionChange)="actualizarEstaciones(id_programa_act)" placeholder="Seleccione" class="">
+                       <ion-select-option *ngFor="let data of programas | async" value="{{ data.id }}">{{ data.name }}</ion-select-option>
+                   </ion-select>
+               </ion-item>
 
-      <div class="ion-text-center" color="primary" style="padding-top: 50px;" >
+               <ion-item style="margin-left: 30px; margin-right: 30px; padding-bottom: 0px;">
+                   <ion-label class="nun_blk">Estaciones</ion-label>
+                   <ion-select [(ngModel)]="id_estacion" placeholder="Seleccione" multiple [selectedText]="textToDisplay" (ionChange)="onSelectChange($event)">
+                       <ion-select-option style="font-size: 11px;" *ngFor="let data of estaciones | async" value="{{data.name}}">{{data.name}}</ion-select-option>
+                   </ion-select>
+               </ion-item>
+               <ion-item style="margin-left: 30px; margin-right: 30px; padding-bottom: 10px;">
+                   <ion-checkbox color="primary" [(ngModel)]="isChecked" (ionChange)="uncheck($event)" slot="start"></ion-checkbox>
+                   <ion-label>Todas las estaciones</ion-label>
+               </ion-item>
 
-       
-    
-        <h3><ion-icon slot="icon-only" color="primary"  name="cloud-download-outline" style=" font-size: 64px;text-align: center; vertical-align: middle;"></ion-icon> 
-        </h3>
-        <ion-text color="primary">
-          <h6>Actualizar muestras</h6>
-        </ion-text>
+               <ion-button size="" fill="outline" color="primary" (click)="getEstacionId()">Obtener Datos</ion-button>
 
-        <ion-list >
-          
-        
-          <ion-item  style="margin-left: 30px; margin-right: 30px; padding-bottom: 0px;" >
-            <ion-label class="nun_blk">Estaciones</ion-label>
-
-   <ion-select  [(ngModel)]="id_estacion" placeholder="Seleccione" multiple [selectedText]="textToDisplay" (ionChange)="onSelectChange($event)">
-  
-
-            <!-- <ion-select-option style="font-size: 11px;"  value="LM-21"  >LM-21</ion-select-option>
-              <ion-select-option style="font-size: 11px;"  value="PBC-08"  >PBC-08</ion-select-option>
-              <ion-select-option style="font-size: 11px;"  value="Cch-1"  >Cch-1</ion-select-option>-->
-                         
-   <ion-select-option style="font-size: 11px;" *ngFor="let data of estaciones | async" value="{{data.name}}"  >{{data.name}}</ion-select-option>
-   -
-        </ion-select>
-          </ion-item> 
-          <ion-item style="margin-left: 30px; margin-right: 30px; padding-bottom: 10px;">
-            <ion-checkbox color="primary" (ionChange)="uncheck($event)"  slot="start"></ion-checkbox>
-            <ion-label>Todas las estaciones</ion-label>
-          </ion-item>          <br>
-          <ion-button  shape="round" class="shadow-red" color="primary" (click)="getEstacionId()">Obtener Datos</ion-button>           
-        </ion-list>
-     </div>    
-      
-    </div>
-  </div>
- 
+           </div>
+       </div>
+   </div>
 </ion-content>

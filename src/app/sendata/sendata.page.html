@@ -68,35 +68,9 @@
 
 <ion-content  class="nun_blk">
 
-
-  
-
- 
-  
-  <!-- Segment buttons with the first checked and the last disabled -->
- 
-  
-  <!-- Segment buttons with values and icons -->
- 
-<!---
-  <ion-segment [(ngModel)]="selectedView" color="primary">
-    <ion-segment-button value="toSend" >
-      <ion-icon name="phone-portrait-outline"></ion-icon> <ion-label>Sin Enviar </ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Sent">
-      <ion-icon name="server-outline"></ion-icon>  <ion-label>Enviados</ion-label>
-    </ion-segment-button>
-  </ion-segment>-->
-
   <div [ngSwitch]="selectedView">
 
-    <div *ngSwitchCase="'toSend'"  >
-
-     
-
-    
-      
-
+    <div *ngSwitchCase="'toSend'" >  
 
     <div *ngIf="checkBoxList.length === 0" >
       <div class="ion-text-center" color="primary" style="padding-top: 70px;" >
@@ -112,10 +86,10 @@
     
       <ion-searchbar
                  [debounce]="250"
-       style="background-color: #3880ff;"  placeholder="Buscar"
-      inputmode="text"    
-      [debounce]="250"
-      animated  (ionChange)="onsearchChange($event)"
+                 style="background-color: #3880ff;"  placeholder="Buscar"
+                 inputmode="text"    
+                 [debounce]="250"
+                  animated  (ionChange)="onsearchChange($event)"
   ></ion-searchbar>
       
   <ion-list  style="padding-top: 0;">
@@ -131,11 +105,7 @@
   </ion-list>
   <ion-list  style="padding-top: 0;">
     <ion-item *ngFor="let item of checkBoxList | filtro :textoBuscar "  style="padding-top: 0;">
-    <!-- <ion-label>        
-        <h3 color="dark"> <ion-icon name="time-outline" color="danger" style="padding-bottom: 0px;" ></ion-icon> {{ item.estacion }}  </h3>        
-        <p color="medium">{{ item.fecha_medicion + " - " +item.hora_medicion }}</p>           
-     </ion-label>   -->
-    
+  
      <ion-label class="nun_blk">
       <h3 color="dark">  {{ item.estacion }}  </h3>        
       <p color="medium">{{ item.fecha_medicion + " - " +item.hora_medicion }}</p>  

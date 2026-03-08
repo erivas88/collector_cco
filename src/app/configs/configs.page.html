@@ -4,7 +4,7 @@
         <ion-menu-button  ></ion-menu-button>
       </ion-buttons>
     <ion-title>
-      Settings
+      Info
     </ion-title>
     <ion-buttons slot="end"  >
       <ion-button  expand="block" >
@@ -17,20 +17,64 @@
  
 </ion-header>
 
-<ion-content>
-  <ion-list>
 
-    <ion-item>
+
+
+
+
+<ion-content fullscreen class="ion-padding" scroll-y="false">
+  <ion-slides  [options]="{ slidesPerView: true, loop: true }">
+    <ion-slide>
+      <div class="slide">
+        <img src="assets/img/ica-slidebox-img-2.png" />
+        <h2>Recopila Datos</h2>
+        <p style="text-align: justify;">
+          <b>GP Collector</b> es una aplicación  que permite utilizar nuestro smartphone  para recopilar información de mediciones realizadas en terreno,
+           con conexión o sin ella.
+
+           </p>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/ica-slidebox-img-1.png" />
+      <h2>Analiza Datos </h2>
+      <p style="text-align: justify;">
+        Trabaja en modo off-line y analiza la calidad de los datos recopilados en terreno. Fácil de manejar y de configurar.
+      </p>
+      
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/ica-slidebox-img-3.png" />
+      <h2>Envía tus Datos</h2>
+      <p style="text-align: justify;">
+        En nuestros servidores se almacenan datos recopilados en terreno para para su posterior verificación y procesamiento. 
+      </p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/ica-slidebox-img-3.png" />
+      <h2>Ready to Play?</h2>
+      <ion-button fill="clear">Continue <ion-icon slot="end" name="arrow-forward"></ion-icon></ion-button>
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+
+ 
+  <!--<ion-list>
+
+   <ion-item>
       <ion-label>Service Worker</ion-label>
       <ion-toggle [(ngModel)]="status"   color="primary" (ionChange)="change_status($event)" checked="{{status}}"></ion-toggle>
     </ion-item>
     <ion-item>
-    <ion-button shape="round" fill="outline" (click)="processSendData()">Outline + Round</ion-button>
+    <ion-button shape="round" fill="outline" (click)="processSendData()">Envio de Datos</ion-button>
     </ion-item>
 
    
   
   
-  </ion-list>
+  </ion-list>-->
 
-</ion-content>
+

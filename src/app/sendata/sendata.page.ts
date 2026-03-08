@@ -8,11 +8,6 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DNS } from '@ionic-native/dns/ngx';
 
 
-
-
-
-
-
 @Component({
   selector: 'app-sendata',
   templateUrl: './sendata.page.html',
@@ -93,138 +88,7 @@ export class SendataPage implements OnInit {
     
     });
     
-/*
-    this.checkBoxList = [
-    { id:'1',
-      estacion: 'Drop Box 0',
-      fecha_medicion: '01-01-2021',
-      hora_medicion : '22:22:22',       
-      isChecked:false
-      }, { id:'2',
-      estacion: 'Drop Box 1',
-      fecha_medicion: '01-01-2021',
-      hora_medicion : '22:22:22',       
-      isChecked:false
-      }, { id:'3',
-     estacion: 'Drop Box 2',
-     fecha_medicion: '01-01-2021',
-     hora_medicion : '22:22:22',       
-     isChecked:false
-     }, { id:'4',
-     estacion: 'Drop Box 3',
-     fecha_medicion: '01-01-2021',
-     hora_medicion : '22:22:22',       
-     isChecked:false
-     }, { id:'5',
-     estacion: 'Drop Box 4',
-     fecha_medicion: '01-01-2021',
-     hora_medicion : '22:22:22',       
-     isChecked:false
-     }, { id:'6',
-     estacion: 'Drop Box ',
-     fecha_medicion: '01-01-2021',
-     hora_medicion : '22:22:22',       
-     isChecked:false
-    },{ id:'1',
-    estacion: 'Drop Box 0',
-    fecha_medicion: '01-01-2021',
-    hora_medicion : '22:22:22',       
-    isChecked:false
-    }, { id:'2',
-    estacion: 'Drop Box 1',
-    fecha_medicion: '01-01-2021',
-    hora_medicion : '22:22:22',       
-    isChecked:false
-    }, { id:'3',
-   estacion: 'Drop Box 2',
-   fecha_medicion: '01-01-2021',
-   hora_medicion : '22:22:22',       
-   isChecked:false
-   }, { id:'4',
-   estacion: 'Drop Box 3',
-   fecha_medicion: '01-01-2021',
-   hora_medicion : '22:22:22',       
-   isChecked:false
-   }, { id:'5',
-   estacion: 'Drop Box 4',
-   fecha_medicion: '01-01-2021',
-   hora_medicion : '22:22:22',       
-   isChecked:false
-   }, { id:'6',
-   estacion: 'Drop Box ',
-   fecha_medicion: '01-01-2021',
-   hora_medicion : '22:22:22',       
-   isChecked:false
-  },{ id:'1',
-  estacion: 'Drop Box 0',
-  fecha_medicion: '01-01-2021',
-  hora_medicion : '22:22:22',       
-  isChecked:false
-  }, { id:'2',
-  estacion: 'Drop Box 1',
-  fecha_medicion: '01-01-2021',
-  hora_medicion : '22:22:22',       
-  isChecked:false
-  }, { id:'3',
- estacion: 'Drop Box 2',
- fecha_medicion: '01-01-2021',
- hora_medicion : '22:22:22',       
- isChecked:false
- }, { id:'4',
- estacion: 'Drop Box 3',
- fecha_medicion: '01-01-2021',
- hora_medicion : '22:22:22',       
- isChecked:false
- }, { id:'5',
- estacion: 'Drop Box 4',
- fecha_medicion: '01-01-2021',
- hora_medicion : '22:22:22',       
- isChecked:false
- }, { id:'6',
- estacion: 'Drop Box ',
- fecha_medicion: '01-01-2021',
- hora_medicion : '22:22:22',       
- isChecked:false
-},{ id:'1',
-estacion: 'Drop Box 0',
-fecha_medicion: '01-01-2021',
-hora_medicion : '22:22:22',       
-isChecked:false
-}, { id:'2',
-estacion: 'Drop Box 1',
-fecha_medicion: '01-01-2021',
-hora_medicion : '22:22:22',       
-isChecked:false
-}, { id:'3',
-estacion: 'Drop Box 2',
-fecha_medicion: '01-01-2021',
-hora_medicion : '22:22:22',       
-isChecked:false
-}, { id:'4',
-estacion: 'Drop Box 3',
-fecha_medicion: '01-01-2021',
-hora_medicion : '22:22:22',       
-isChecked:false
-}, { id:'5',
-estacion: 'Drop Box 4',
-fecha_medicion: '01-01-2021',
-hora_medicion : '22:22:22',       
-isChecked:false
-}, { id:'6',
-estacion: 'Drop Box ',
-fecha_medicion: '01-01-2021',
-hora_medicion : '22:22:22',       
-isChecked:false
-}];
-  
-  for(let i=0;i<8;i++)
-  { 
-    this.mydata.push(this.checkBoxList[i]);
-    
-  }
-  this.start = 8;
 
-  console.log(this.mydata);*/
    
   }
 
@@ -345,17 +209,18 @@ isChecked:false
   }
   else{
 
-    let mobiledata = JSON.stringify(dataSend);
+    //let mobiledata = JSON.stringify(dataSend);
+    let mobiledata = dataSend;
     let respuesta, updates ;
     console.log(mobiledata);
     load.present().then(() => { 
-      this.http.post('https://www.gpconsultores.cl/api_rest/insert_new_data.php', {mobiledata}, {responseType: 'json'} ).subscribe(data => {
+    this.http.post('https://www.gpconsultores.cl/apicollector/process.php', {mobiledata}, {responseType: 'json'} ).subscribe(data => {
         console.log(data);  
         this.ServerResponse = data; 
         respuesta = data;
         this.updatingData= respuesta.response;
         updates = respuesta.response;
-        console.log(respuesta.response);
+        console.log("reply->",respuesta.response);
         this.UpdateDataServer(respuesta.response);    
         console.log(updates)
         this.ServerMessage(respuesta);
@@ -363,6 +228,7 @@ isChecked:false
        },  (error) => {                              //Error callback
         console.error('Callback Error');
         load.dismiss();
+        this.presentError(error.message);
       });
     });
     this.db.loadMonitoreos();
@@ -374,6 +240,17 @@ isChecked:false
   }
 
 }
+
+async presentError(message) {
+  const alert = await this.alertController.create({
+    header: 'Error',
+    message: message,
+    buttons: ['OK']
+  });
+
+  await alert.present();
+}
+
 UpdateDataServer(data)
 {
     console.log("outside ");
@@ -395,28 +272,53 @@ async presentAlert() {
 }
 
 async ServerMessage(servermessage) {
-
-  console.log(servermessage.insertados)
-
-  const alert = await this.alertController.create({
+  const cantidadInsertada = servermessage.insertados;
+  let mensaje;
   
- 
+  if (cantidadInsertada === 0) {
+      mensaje = 'Ninguna muestra fue ingresada, Verifique logs en servidor';
+  } else {
+      mensaje = cantidadInsertada > 1 ? ` muestras ingresadas` : ' muestra ingresada';
+  }
+  
+  console.log(cantidadInsertada);
+  console.log(mensaje);  
+
+  /*const alert = await this.alertController.create({
     header: 'Respuesta',
     subHeader: '',
-    message: servermessage.insertados+ " Muestras Ingresadas",
+    message: `${cantidadInsertada} ${mensaje}`,
     buttons: [
-     {
+      {
         text: 'Ok',
         role: 'cancel',
         cssClass: 'secondary',
         handler: () => {
           console.log('Confirm Ok');
-          
+        }
+      }
+    ]
+  });*/
+
+  const alert = await this.alertController.create({
+    header: 'Respuesta',
+    subHeader: '',
+    message: `
+      <ion-icon name="information-circle" color="primary" size="large"></ion-icon>
+      ${cantidadInsertada} ${mensaje}
+    `,
+    buttons: [
+      {
+        text: 'Ok',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Ok');
         }
       }
     ]
   });
-  
+
   await alert.present();
 }
 

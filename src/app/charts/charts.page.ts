@@ -34,10 +34,15 @@ export class ChartsPage implements OnInit {
   icon1 = '';
   icon2 = '';
   icon3 = '';
+  icon4 = '';
 
   class1= '';
   class2= '';
   class3= '' ;
+  class4= '' ;
+  msg_outlier = '';
+
+ 
 
 
 
@@ -67,6 +72,10 @@ export class ChartsPage implements OnInit {
   min : any;
   avg : any;
 
+  media : any;
+  desviacion_estandar : any;
+  outlier: any;
+
   public name : any;
   
 
@@ -84,46 +93,16 @@ export class ChartsPage implements OnInit {
 
     console.log('ngOnInit');
 
-    /*
-
-    this.db.getDatabaseState().subscribe(rdy => {
-      if (rdy) {
-        this.db.getDevs().subscribe(devs => {
-          this.developers = devs;
-        }); 
-        let parametro = this.parametro;
-        let estacion = this.estacion;
-       // this.db.loadHistoricoP(parametro.trim(), estacion.trim());    
-        this.db.loadHistoricoP('', '');      
-
-        this.db.getHistorico().subscribe((data) => {
-          this.historicos= data;
-          console.log(this.historicos)
-        }, (err) => {
-        console.log(err);
-        });        
-      }
-    }); 
-
-    let nameCapitalized = this.parametro.charAt(0).toUpperCase() + this.parametro.slice(1)
-
-    this.title = this.estacion+"["+nameCapitalized+"]";
-    this.titleyAxis = nameCapitalized;
-    var today = new Date();
-    console.log(this.convertIntoMili());
-    //this.valor_nivel='1';   
-    //let serie = [{name:this.estacion+"["+nameCapitalized+"]",color :'#3880ff' ,data: this.historicos},{name:nameCapitalized+'['+today+']', color: '#FF0000',data: [[this.convertIntoMili(),this.value]]}]; 
-    let serie = [{name:this.estacion+"["+nameCapitalized+"]",color :'#3880ff' ,data: this.historicos},{name:nameCapitalized+'['+this.convertDate(today)+' '+this.convertTime()+']', color: '#FF0000',data: [[this.convertIntoMili(),(this.value)*1]]}]; 
-    
-    console.log(serie);
-    this.ChartPopulation(this.historicos);
-   */
+   
   }
 
   ionViewDidEnter() {
     this.max='';
     this.min='';
     this.avg ='';
+    this.media='';
+    this.desviacion_estandar='';
+    this.outlier='';
 
     console.log(this.value);
     console.log(this.estacion);
@@ -145,7 +124,7 @@ export class ChartsPage implements OnInit {
           this.historicos= data;
           console.log(this.historicos)
           this.createChart(data);
-        //  console.log('max',this.db.loadProm(estacion.trim()));
+       
         
         }, (err) => {
         console.log(err);
@@ -175,89 +154,201 @@ export class ChartsPage implements OnInit {
     this.avg= avg.toFixed(2);
   }
   sortFloat(a,b) { return a - b; }
+
   createChart(data)
   {
-      let arreglo = data;
-      let multiData=[],i=0; 
-    
-      for (let entry of arreglo)
-      {         
-          multiData.push(entry[1]);    
-        
-      }
-      multiData.sort(this.sortFloat) ;
-
-
-      let result = multiData.filter((item,index)=>{
-        return  multiData.indexOf(item) === index;
-      });
-
-      console.log('cleaning',result);
-      console.log('ord_min',result[0]);
-      console.log('ord_max',result[result.length-1]);
-
-     
-    this.max =  result[result.length-1]  ;
-    this.min = result[0] ;
-
-  /*  console.log('mi nuevo arreglo',multiData);
-     console.log('max->',Math.min.apply(multiData));
-     console.log('min->',Math.max.apply(multiData));
-     console.log('max->',max);
-     console.log('min->',min);*/
-         //console.log('mi nuevo arreglo',multiData);
-        //console.log('maximo->',Math.max(multiData))
-      //console.log('minimo->',Math.min(multiData))
-;
-
-
-
-
-    console.log('cantidad de elementos',arreglo.length)
-    
+    let arreglo = data;
+    let multiData = [],
+        i = 0;
+    const valores = data.map(elemento => elemento[1]);
+    const fechas = data.map(elemento => elemento[0]);
+    let fecha_min = fechas[0];
+    console.log(valores);
+    console.log('media_calc :', this.calcularMedia(valores));
+    console.log('desviacion_estandar :', this.calcularDesviacionEstandar(valores));
+    console.log('valor a evaluar :', this.convertirtoFloat(this.value))
+    this.media = this.dosDecimales(this.calcularMedia(valores));
+    this.desviacion_estandar = this.dosDecimales(this.calcularDesviacionEstandar(valores));
+    let valor = this.convertirtoFloat(this.value);
+    this.outlier = this.esOutlier(valor, this.media, this.desviacion_estandar)
+    console.log(this.outlier);
+    if (this.outlier == false) {
+        this.icon4 = 'thumbs-up-outline';
+        this.class4 = 'primary';
+        this.msg_outlier = `El valor de ${this.value} ${this.unidad} es normal y típico.`;
+    } else {
+        this.icon4 = 'thumbs-down-outline';
+        this.class4 = 'error';
+        this.msg_outlier = `El valor de ${this.value} ${this.unidad} es inusual o atípico.`;
+    }
+    console.log('cantidad de elementos', valores.length)
     let factor = this.value / this.ultimo;
-
-    console.log('finite',isFinite(factor));
+    console.log('finite', isFinite(factor));
     console.log(factor);
     this.details(factor);
-   
-
-
-
-
-    this.historicos= data;
-    if(this.parametro!='ph')
-    {
-      var today = new Date();
-      let nameCapitalized = this.parametro.charAt(0).toUpperCase() + this.parametro.slice(1);
-      this.title = this.estacion+" ["+nameCapitalized+"]";
-      this.titleyAxis = nameCapitalized+' ['+this.unidad+']';
-      let serie = [{name:this.estacion+"["+nameCapitalized+"]",color :'#3880ff' ,data: data, tooltip: {valueDecimals: 2, valueSuffix: this.unidad } },{name:nameCapitalized+'['+this.convertDate(today)+' '+this.convertTime()+']', color: '#FF0000',data: [[this.convertIntoMili(),(this.value)*1]],  tooltip: {valueDecimals: 2, valueSuffix: this.unidad }  }]; 
-      console.log(serie);
-      this.ChartPopulation(serie);
-
+    this.historicos = data;
+    if (this.parametro != 'ph') {
+        var today = new Date();
+        var today = new Date();
+        var lim_inf = this.calcularMedia(valores) - (3 * this.calcularDesviacionEstandar(valores));
+        var lim_sup = this.calcularMedia(valores) + (3 * this.calcularDesviacionEstandar(valores));
+        let nameCapitalized = this.parametro.charAt(0).toUpperCase() + this.parametro.slice(1);
+        this.title = this.estacion + " [" + nameCapitalized + "]";
+        this.titleyAxis = nameCapitalized + ' [' + this.unidad + ']';
+        
+        let serie = [{
+            name: 'LimSup',
+            dashStyle: 'Dash',
+            color: 'red',
+            marker: {
+                enabled: false
+            },
+            data: [
+                [fecha_min, lim_sup],
+                [this.convertIntoMili(), lim_sup]
+            ]
+        }, {
+            name: 'LimInf',
+            dashStyle: 'Dash',
+            color: 'orange',
+            marker: {
+                enabled: false
+            },
+            data: [
+                [fecha_min, lim_inf],
+                [this.convertIntoMili(), lim_inf]
+            ]
+        }, {
+            name: this.estacion + "[" + nameCapitalized + "]",
+            color: '#38ff63',
+            data: data,
+            tooltip: {
+                valueDecimals: 2,
+                valueSuffix: this.unidad
+            }
+        }, {
+            name: nameCapitalized + '[' + this.convertDate(today) + ' ' + this.convertTime() + ']',
+            color: '#FF0000',
+            data: [
+                [this.convertIntoMili(), (this.value) * 1]
+            ],
+            marker: {
+                symbol: 'circle'
+            },
+            tooltip: {
+                valueDecimals: 2,
+                valueSuffix: this.unidad
+            }
+        }];
+        console.log(serie);
+        this.ChartPopulation(serie);
+    } else {
+        var today = new Date();
+        var lim_inf = this.calcularMedia(valores) - (3 * this.calcularDesviacionEstandar(valores));
+        var lim_sup = this.calcularMedia(valores) + (3 * this.calcularDesviacionEstandar(valores));
+        this.title = this.estacion + "[" + this.parametro + "]";
+        this.titleyAxis = this.parametro + ' [' + this.unidad + ']';
+        let serie = [{
+            name: 'LimSup',
+            dashStyle: 'Dash',
+            color: 'red',
+            marker: {
+                enabled: false
+            },
+            data: [
+                [fecha_min, lim_sup],
+                [this.convertIntoMili(), lim_sup]
+            ]
+        }, {
+            name: 'LimInf',
+            dashStyle: 'Dash',
+            color: 'orange',
+            marker: {
+                enabled: false
+            },
+            data: [
+                [fecha_min, lim_inf],
+                [this.convertIntoMili(), lim_inf]
+            ]
+        }, {
+            name: this.estacion + " [" + this.parametro + "]",
+            color: '#38ff63',
+            data: data,
+            tooltip: {
+                valueDecimals: 2,
+                valueSuffix: this.unidad
+            }
+        }, {
+            name: this.parametro + '[' + this.convertDate(today) + ' ' + this.convertTime() + ']',
+            color: '#FF0000',
+            data: [
+                [this.convertIntoMili(), (this.value) * 1]
+            ],
+            marker: {
+                symbol: 'circle'
+            },
+            tooltip: {
+                valueDecimals: 2,
+                valueSuffix: this.unidad
+            }
+        }];
+        console.log(serie);
+        this.ChartPopulation(serie);
     }
-    else
-    {
-     // let nameCapitalized = this.parametro.charAt(0).toUpperCase() + this.parametro.slice(1);
-     var today = new Date();
-      this.title = this.estacion+"["+this.parametro+"]";
-      this.titleyAxis = this.parametro+' ['+this.unidad+']';
-      let serie = [{name:this.estacion+" ["+this.parametro+"]",color :'#3880ff' ,data: data, tooltip: {valueDecimals: 2, valueSuffix: this.unidad } },{name:this.parametro+'['+this.convertDate(today)+' '+this.convertTime()+']', color: '#FF0000',data: [[this.convertIntoMili(),(this.value)*1]],  tooltip: {valueDecimals: 2, valueSuffix: this.unidad }  }]; 
-      console.log(serie);
-      this.ChartPopulation(serie);
+}
 
+  dosDecimales(numero) {
+    return parseFloat(numero.toFixed(2));
+  }
+
+  calcularMedia(array) {
+    if (array.length === 0) {
+      return 0; // o puedes devolver NaN, dependiendo de tus necesidades
     }
   
-    //var today = new Date();
-          //console.log(this.convertIntoMili());
-          //this.valor_nivel='1';   
-    //let serie = [{name:this.estacion+"["+nameCapitalized+"]",color :'#3880ff' ,data: data, tooltip: {valueDecimals: 2, valueSuffix: this.unidad } },{name:nameCapitalized+'['+this.convertDate(today)+' '+this.convertTime()+']', color: '#FF0000',data: [[this.convertIntoMili(),this.value]],  tooltip: {valueDecimals: 2, valueSuffix: this.unidad }  }]; 
-   // console.log(serie);
-   // this.ChartPopulation(serie);
-
-    
+    const suma = array.reduce((acumulador, valor) => acumulador + valor, 0);
+    const media = suma / array.length;
+  
+    return media;
   }
+
+  calcularDesviacionEstandar(array) {
+    if (array.length <= 1) {
+      return 0; // o puedes devolver NaN, dependiendo de tus necesidades
+    }
+  
+    const media = this.calcularMedia(array);
+  
+    const sumaDeCuadrados = array.reduce((acumulador, valor) => {
+      const diferencia = valor - media;
+      return acumulador + diferencia * diferencia;
+    }, 0);
+  
+    const varianza = sumaDeCuadrados / (array.length - 1);
+    const desviacionEstandar = Math.sqrt(varianza);
+  
+    return desviacionEstandar;
+  }
+
+  convertirtoFloat(valorString) {
+    // Utiliza parseFloat para convertir el valor de cadena a float
+    const valorFloat = parseFloat(valorString);
+  
+    // Verifica si la conversión fue exitosa
+    if (isNaN(valorFloat)) {
+      console.error(`No se pudo convertir "${valorString}" a un número flotante.`);
+      return NaN; // o puedes devolver algún valor predeterminado según tus necesidades
+    }
+  
+    return valorFloat;
+  }
+
+  esOutlier(valor, media, desviacionEstandar, umbralZ = 3.0) {
+    const zScore = Math.abs((valor - media) / desviacionEstandar);
+  
+    return zScore > umbralZ;
+  }
+
   details(factor)
   {
 
@@ -265,15 +356,11 @@ export class ChartsPage implements OnInit {
     {
       
      this.icon1='checkmark-circle-outline';
-     this.class1='primary'
- 
+     this.class1='primary'; 
      this.icon2='checkmark-circle-outline';
-     this.class2='primary';
- 
+     this.class2='primary'; 
      this.icon3='checkmark-circle-outline';
      this.class3='primary';
- 
-     
      this.factor ='SD';
  
     }
@@ -343,7 +430,8 @@ export class ChartsPage implements OnInit {
 
   }
 
-  ionChangeValor(event,parameter){
+  ionChangeValor(event,parameter)
+  {
     console.log(event.detail.value);
     console.log(parameter);
     let valueInsert = event.detail.value;
@@ -443,11 +531,11 @@ export class ChartsPage implements OnInit {
     var character = {
         'name': this.name,
         'discount': false,        
-        'opt': false,
+        'opt': false, 
       };
-      let serie = [{name:this.estacion+"["+nameCapitalized+"]",color :'#3880ff' ,data: this.historicos},{name:nameCapitalized+'['+this.convertDate(today)+' '+this.convertTime()+']', color: '#FF0000',data: [[this.convertIntoMili(),(valueInsert)*1]]}]; 
-     //let serie = [{name:this.estacion+"["+nameCapitalized+"]",color :'#3880ff' ,data: this.historicos},{name:nameCapitalized+'['+today+']', color: '#FF0000',data: [[this.convertIntoMili(),this.value]]}]; 
-     //let serie = [{name:'Serie 1',color :'#3880ff' ,data: this.historicos},{name:'Serie 2', color: '#FF0000',data: [[this.convertIntoMili(),(this.name)*1]]}]; 
+      let serie = [{name:this.estacion+"["+nameCapitalized+"]",color :'#38ff63' ,data: this.historicos},{name:nameCapitalized+'['+this.convertDate(today)+' '+this.convertTime()+']',marker: {symbol: 'circle'}  ,  color: '#FF0000',data: [[this.convertIntoMili(),(valueInsert)*1]]}]; 
+     //let serie = [{name:this.estacion+"["+nameCapitalized+"]",color :'#38ff63' ,data: this.historicos},{name:nameCapitalized+'['+today+']', color: '#FF0000',data: [[this.convertIntoMili(),this.value]]}]; 
+     //let serie = [{name:'Serie 1',color :'#38ff63' ,data: this.historicos},{name:'Serie 2', color: '#FF0000',data: [[this.convertIntoMili(),(this.name)*1]]}]; 
       console.log(serie);
       let empty = [];
       //this.ChartPopulation(empty);
@@ -500,29 +588,29 @@ export class ChartsPage implements OnInit {
     
   }
 
-  setQuantity(value) {
-    this.name = value;
+  setQuantity(value)
+  {
+  
+      this.name = value;
   
   }
 
-  updateChart(){
-
-    
-
-  // this.setQuantity(this.value);
+  updateChart()
+  {
+  
+   // boton de actualizar los graficos //
+   // this.setQuantity(this.value);
    console.log(this.name);
-
-
    let factor = this.name / this.ultimo;
 
    console.log('finite',isFinite(factor));
    console.log(factor);
-
    this.details(factor);
 
     this.dato='6';
     console.log(this.dato);
     console.log(this.value);
+    
     console.log('hi');
     var today = new Date();
     let nameCapitalized = this.parametro.charAt(0).toUpperCase() + this.parametro.slice(1);
@@ -532,12 +620,55 @@ export class ChartsPage implements OnInit {
         'discount': false,        
         'opt': false,
       };
-      let serie = [{name:this.estacion+"["+nameCapitalized+"]",color :'#3880ff' ,data: this.historicos},{name:nameCapitalized+'['+this.convertDate(today)+' '+this.convertTime()+']', color: '#FF0000',data: [[this.convertIntoMili(),(this.name)*1]]}]; 
-     //let serie = [{name:this.estacion+"["+nameCapitalized+"]",color :'#3880ff' ,data: this.historicos},{name:nameCapitalized+'['+today+']', color: '#FF0000',data: [[this.convertIntoMili(),this.value]]}]; 
-     //let serie = [{name:'Serie 1',color :'#3880ff' ,data: this.historicos},{name:'Serie 2', color: '#FF0000',data: [[this.convertIntoMili(),(this.name)*1]]}]; 
+      let serie = [
+        {
+          name: this.estacion + "[" + nameCapitalized + "]",
+          color: '#38ff63',
+          data: this.historicos,
+         
+        },
+        {
+          name: nameCapitalized + '[' + this.convertDate(today) + ' ' + this.convertTime() + ']',
+          color: '#FF0000',
+          data: [[this.convertIntoMili(), this.name * 1]],
+          marker: {
+            symbol: 'circle', // Símbolo de círculo
+          },
+        },
+      ];
+
+      let arreglo =this.historicos;
+      let multiData=[],i=0; 
+    
+      for (let entry of arreglo)
+      {         
+          multiData.push(entry[1]);    
+        
+      }
+      multiData.sort(this.sortFloat) ;
+
+
+      let result = multiData.filter((item,index)=>
+      {
+        return  multiData.indexOf(item) === index;
+      });
+
+      console.log('cleaning',result);
+      console.log('ord_min',result[0]);
+      console.log('ord_max',result[result.length-1]);
+      console.log('media_calc :',this.calcularMedia(result)); 
+      console.log('desviacion_estandar :',this.calcularDesviacionEstandar(result));
+      console.log('valor a evaluar :', this.convertirtoFloat(this.value));  
+
+      this.media = this.dosDecimales(this.calcularMedia(result));
+      this.desviacion_estandar = this.dosDecimales(this.calcularDesviacionEstandar(result));
+      let valor = this.convertirtoFloat(this.value);
+      this.outlier =   this.esOutlier(valor,this.media,this.desviacion_estandar)
+      console.log(this.outlier);
+      this.max =  result[result.length-1]  ;
+      this.min = result[0];
       console.log(serie);
-      let empty = [];
-      //this.ChartPopulation(empty);
+      let empty = [];  
       this.ChartPopulation(serie);
       console.log(character); 
   }
@@ -586,7 +717,7 @@ export class ChartsPage implements OnInit {
      
   });
 
-    this.chartOptions = HighCharts.chart('highcharts_result', {
+  this.chartOptions = HighCharts.chart('highcharts_result', {
         chart: {
           backgroundColor: 'transparent',
           type: 'line', 
@@ -604,6 +735,8 @@ export class ChartsPage implements OnInit {
 
           type: 'datetime',
           gridLineWidth: 1,
+          gridLineDashStyle: 'Dash', //
+          gridLineColor: 'grey',
           
           crosshair: {
             width: 1,
@@ -620,7 +753,7 @@ export class ChartsPage implements OnInit {
          credits: {
                 enabled: false,
         },
-        yAxis: [{
+        yAxis: [    {
           title: {
               text: this.titleyAxis,
               style: {
@@ -628,6 +761,9 @@ export class ChartsPage implements OnInit {
                   color: 'grey'
               },
           },
+          gridLineWidth: 1,
+          gridLineDashStyle: 'Dash', //
+          gridLineColor: 'grey',
           labels: {
               format: '{value:.1f}',
               style: {

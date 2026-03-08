@@ -53,3 +53,12 @@
     align-items: center;
     justify-items: center;
   }
+  .ionic-selectable-item-is-selected,.ionic-selectable-item-is-disabled
+ {
+   .label {
+    font-family: 'nuni-black' !important;
+   }
+ }
+ .item-list {
+  font-family: 'nuni-black' !important;
+}

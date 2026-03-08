@@ -114,20 +114,18 @@ export class HistoricDataPage implements OnInit {
   }
   fillChart(estaciones,parametros){
 
-    if(estaciones.length>1)
-    {
-       this.textToDisplay = "("+estaciones.length+")" ;
-       console.log('text',this.textToDisplay);
-
-    }
-    if(parametros.length>1)
-    {
-       this.textToDisplay1 = "("+parametros.length+")" ;
-       console.log('text',this.textToDisplay1);
-
-    }
-
-   
+    if (estaciones.length > 0) {
+      this.textToDisplay = "(" + estaciones.length + ")";
+      console.log('text', this.textToDisplay);
+  } else {
+      this.textToDisplay = '';
+  }
+  if (parametros.length > 0) {
+    this.textToDisplay1 = "(" + parametros.length + ")";
+    console.log('text', this.textToDisplay1);
+} else {
+    this.textToDisplay1 = '';
+}
 
 
 
@@ -179,41 +177,7 @@ export class HistoricDataPage implements OnInit {
   
             
           }
-         
-
-          /*
-
-         
-
-          console.log('parametro',parametro);
-          console.log('estacion',estacion)
-          
-          this.db.loadHistoricoP(parametro.trim(),estacion.trim());  
         
-         this.db.getHistoricop().subscribe((data) => {
-            this.historicos= data;
-            console.log(data);
-            console.log('elements',data.length)
-            if(data.length>0)
-            {
-              console.log(this.historicos)
-              let serie = [{name:estacion+" ["+parametro+"]",color :'#ffb10a' ,data: this.historicos}]; 
-              this.ChartPopulation(this.historicos);
-
-            }
-            if(data.length==0)
-            {
-              this.presentToast()
-              let serie = [{name:estacion+" ["+parametro+"]",color :'#ffb10a' ,data: this.historicos}]; 
-              this.ChartPopulation(this.historicos);
-            }
-           
-          }, (err) => {
-          console.log(err);
-          });*/
-          
-       
-
         }
       
 
@@ -233,6 +197,14 @@ export class HistoricDataPage implements OnInit {
   
 
   }
+  capitalizar(str) {
+  
+    str = String(str);
+
+    return str.toLowerCase() === 'ph' ? 'pH' : str.charAt(0).toUpperCase() + str.slice(1);
+
+}
+
   async locationSucess() { 
 
   
@@ -245,6 +217,8 @@ export class HistoricDataPage implements OnInit {
     toast.present();
    
   }
+
+  
   ChartPopulation(data) {    
 
    if(this.parametros_selct==undefined){
@@ -263,7 +237,7 @@ export class HistoricDataPage implements OnInit {
    }
    
    
-
+   var colores = ['#FF5733', '#33FF57', '#334CFF', '#FFD733', '#FF33E8', '#33FFE6'];
    
 
 
@@ -317,7 +291,7 @@ export class HistoricDataPage implements OnInit {
        
         },
         title: {
-          text: this.estaciones_selct+' ['+this.parametros_selct+']',
+          text: this.estaciones_selct+' ['+this.capitalizar(this.parametros_selct)+']',
           style: {
             color: '#9a9ca8',
             font: '11px "nuni-black", sans-serif',
@@ -325,37 +299,48 @@ export class HistoricDataPage implements OnInit {
         },
         xAxis: {
 
+          gridLineColor: 'gray',
+          gridLineWidth: 1,   // Ancho de la línea de la cuadrícula en píxeles
+          lineWidth: 1,       // Ancho de la línea del eje X en píxeles
+          lineColor: 'gray', // Color gris para la línea del eje X
+          labels: {
+              style: {
+                  font: '11px "nuni-black", sans-serif',
+                  color: 'gray' // Color gris para el texto del eje X (años)
+              }
+          },
+
           type: 'datetime',
-          gridLineWidth: 1,
+         
           
           crosshair: {
             width: 1,
             color: 'gray',
             dashStyle: 'Dash'
         },
-          labels: {
-            style: {
-             
-                font: '11px "nuni-black", sans-serif',
-           }
-        }
+         
         },
          credits: {
                 enabled: false,
         },
         yAxis: [{
           title: {
-            text: this.estaciones_selct+' ['+this.parametros_selct+']',
+            text: this.estaciones_selct+' ['+this.capitalizar(this.parametros_selct)+']',
               style: {
                  font: '10px "nuni-black", sans-serif',
                   color: 'grey'
               },
           },
+          gridLineColor: 'gray',
+          gridLineWidth: 1,   // Ancho de la línea de la cuadrícula en píxeles
+          lineWidth: 1,       // Ancho de la línea del eje X en píxeles
+          lineColor: 'gray', // Color gris para la línea del eje X
           labels: {
               format: '{value:.1f}',
               style: {
-                font: '10px "nuni-black", sans-serif',
-             }
+                font: '11px "nuni-black", sans-serif',
+                color: 'gray' // Color gris para el texto del eje X (años)
+            }
           },
           opposite: false,
           margin: 15,
@@ -370,14 +355,19 @@ export class HistoricDataPage implements OnInit {
               text: '',
               style: {
                 font: '10px "nuni-black", sans-serif',
-                  color: 'grey'
+                  color: 'gray'
               },
           },
+          gridLineColor: 'gray',
+          gridLineWidth: 1,   // Ancho de la línea de la cuadrícula en píxeles
+          lineWidth: 1,       // Ancho de la línea del eje X en píxeles
+          lineColor: 'gray', // Color gris para la línea del eje X
           labels: {
               format: '{value:.1f}',
               style: {
-                font: '10px "nuni-black", sans-serif',
-             }
+                font: '11px "nuni-black", sans-serif',
+                color: 'gray' // Color gris para el texto del eje X (años)
+            }
           },
           opposite: true,
           margin: 15,
@@ -413,6 +403,7 @@ export class HistoricDataPage implements OnInit {
     },   
    
     series: data,
+    colors: colores, // Agrega el array de colores
     
     plotOptions: {
       series: {

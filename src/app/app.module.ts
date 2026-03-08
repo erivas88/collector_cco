@@ -21,14 +21,17 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ConfigsPipe } from './configs.pipe';
+import { IonicSelectableModule } from 'ionic-selectable';
+import { Camera } from '@ionic-native/camera/ngx';
+
 
 
 @NgModule({
   declarations: [AppComponent, ConfigsPipe],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,  HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(),  AppRoutingModule,  HttpClientModule,IonicSelectableModule],
   providers: [
-    Geolocation,StatusBar,DNS,
+    Camera,Geolocation,StatusBar,DNS,
     SplashScreen,BackgroundMode,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SQLite,

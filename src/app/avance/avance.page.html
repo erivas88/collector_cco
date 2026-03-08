@@ -1,0 +1,47 @@
+<style>
+.nodata {
+    background: red;
+    /*border: 5px solid rgba(255, 255, 255, 0.5);*/
+    /*color: blue;*/
+    font-weight: bold;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 30px;
+  }
+
+  .data {
+    background: #0f0;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+    color: blue;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 30px;
+  }
+
+
+</style>
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+          Campañas
+      </ion-title>
+  </ion-toolbar>
+  <ion-item class="program-select">
+    <ion-label class="nun_blk">Programa</ion-label>
+    <ion-select [(ngModel)]="id_programa"  (ionChange)="getMarkers(id_programa)"  placeholder="Seleccione" class="">
+        <ion-select-option *ngFor="let data of programas | async" value="{{ data.id }}">{{ data.name }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-header>
+
+<ion-content class="nun_blk">
+
+
+  <div #map style="height: 100%; max-width: 100%;"></div>
+</ion-content>
+
+

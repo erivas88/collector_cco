@@ -19,12 +19,14 @@
     "@angular/platform-browser": "~10.0.0",
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
+    "@asymmetrik/ngx-leaflet": "^17.0.0",
     "@fortawesome/angular-fontawesome": "^0.8.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/free-regular-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@ionic-native/background-mode": "^5.30.0",
+    "@ionic-native/camera": "^5.36.0",
     "@ionic-native/core": "^5.0.0",
     "@ionic-native/dns": "^5.30.0",
     "@ionic-native/geolocation": "^5.31.1",
@@ -33,14 +35,17 @@
     "@ionic-native/sqlite-porter": "^5.30.0",
     "@ionic-native/status-bar": "^5.31.1",
     "@ionic/angular": "^5.0.0",
-    "cordova-android": "8.1.0",
+    "cordova-android": "^8.1.0",
     "cordova-plugin-background-mode": "^0.7.3",
+    "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-dns": "^1.0.2",
     "cordova-plugin-geolocation": "^4.1.0",
     "cordova-sqlite-storage": "^5.1.0",
     "cors": "^2.8.5",
     "file-saver": "^2.0.5",
     "highcharts": "^8.2.2",
+    "ionic-selectable": "^4.8.0",
+    "leaflet": "^1.9.4",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "uk.co.workingedge.cordova.plugin.sqliteporter": "^1.1.1",
@@ -93,10 +98,16 @@
       "cordova-plugin-background-mode": {},
       "cordova-plugin-geolocation": {
         "GPS_REQUIRED": "true"
+      },
+      "cordova-plugin-camera": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
       }
     },
     "platforms": [
       "android"
-    ]
+    ],
+    "scripts": {
+      "postinstall": "ngcc"
+    }
   }
 }

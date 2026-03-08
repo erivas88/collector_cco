@@ -39,7 +39,7 @@ export class AppComponent {
       {
         title : "Monitoreos",
         url   : "/home",
-        icon  : "location-outline"
+        icon  : "locate-outline"
       },
       {
         title : "Registrar Monitoreo",
@@ -49,37 +49,52 @@ export class AppComponent {
       {
         title : "Gráficos",
         url   : "/historic-data",
-        icon  : "stats-chart-outline"
+        icon  : "pulse-outline"
+ 
       },
       
       {
         title : "Enviar datos a Servidor",
         url   : "/sendata",
-        icon  : "server-outline"
+        icon  : "cloud-upload"
+       
       },
       {
-        title : "Sincronizar",
-        url   : "/feedback",        
-        icon  : "cloud-download-outline"
+        title : "ConectorWeb",
+        url   : "/feedback",    
+        icon  : "cloud-download"
+       
       },
        {
-        title : "Actualizaciones",
+        title : "Historial",
         url   : "/update",
-        icon  : "sync-outline",
-       
+        icon  : "folder-open"      
+      
       },
       {
-        title : "Config",
+        title : "Info",
         url   : "/configs",
-        icon  : "cog-outline",
+        icon  : "information-circle-outline",
        
       },
-
       {
-        title : "Cerrar Sesión",
-        url   : "/register",
-        icon  : "log-out-outline"
+        title : "Usuarios",
+        url   : "/users",
+        icon  : "person-outline"
       },
+      {
+        title : "Estaciones",
+        url   : "/estacion",
+        icon  : "add-circle-outline"
+      },
+      {
+        title : "Campañas",
+        url   : "/avance",
+        icon  : "layers-outline"
+      },
+     
     ];
   }
 }
+
+

@@ -47,6 +47,22 @@ const routes: Routes = [
     path: 'configs',
     loadChildren: () => import('./configs/configs.module').then( m => m.ConfigsPageModule)
   },
+  {
+    path: 'users',
+    loadChildren: () => import('./users/users.module').then( m => m.UsersPageModule)
+  },
+  {
+    path: 'estacion',
+    loadChildren: () => import('./estacion/estacion.module').then( m => m.EstacionPageModule)
+  },
+  {
+    path: 'avance',
+    loadChildren: () => import('./avance/avance.module').then( m => m.AvancePageModule)
+  },
+  /*{
+    path: 'fotos',
+    loadChildren: () => import('./fotos/fotos.module').then( m => m.FotosPageModule)
+  },*/
  
   
 ];

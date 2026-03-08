@@ -11,6 +11,7 @@ import { ToastController } from '@ionic/angular';
 
 
 
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -33,7 +34,7 @@ export class HomePage implements OnInit {
   product = {};
   textoBuscar: string = '';
   total  : any;
-  masterkey = 'gp262020';
+  masterkey = 'gp132313';
   users: any[];
 
   constructor(private db: DatabaseService,
@@ -46,10 +47,10 @@ export class HomePage implements OnInit {
    
    ) { 
 
-    setInterval(() => {
+    /*setInterval(() => {
      console.log('Hello World'); 
      console.log(this.db.configSend);
-     }, 1000);
+     }, 1000);*/
    }
 
   ngOnInit() {
@@ -75,71 +76,6 @@ export class HomePage implements OnInit {
 
 
 
-/*
-
-    this.monitoreospp = [
-      { id:'1',
-        estacion: 'Drop Box 0',
-        fecha_medicion: '2020-12-26',
-        hora_medicion : '22:22:22',       
-        isChecked:'false'
-        }, { id:'2',
-        estacion: 'Drop Box 1',
-        fecha_medicion: '2021-01-26',
-        hora_medicion : '22:22:22',       
-        isChecked:'false'
-        }, { id:'3',
-       estacion: 'Drop Box 2',
-       fecha_medicion: '2021-01-28',
-       hora_medicion : '22:22:22',       
-       isChecked:'false'
-       }, { id:'4',
-       estacion: 'Drop Box 3',
-       fecha_medicion: '2021-01-27',
-       hora_medicion : '22:22:22',       
-       isChecked:'false'
-       }, { id:'5',
-       estacion: 'Drop Box 4',
-       fecha_medicion: '2021-01-26',
-       hora_medicion : '22:22:22',       
-       isChecked:'false'
-       }, { id:'6',
-       estacion: 'Drop Box ',
-       fecha_medicion: '2021-01-23',
-       hora_medicion : '22:22:22',       
-       isChecked:'false'
-      },{ id:'1',
-      estacion: 'Drop Box 0',
-      fecha_medicion: '2021-01-21',
-      hora_medicion : '22:22:22',       
-      isChecked:'false'
-      }, { id:'2',
-      estacion: 'Drop Box 1',
-      fecha_medicion: '2021-01-20',
-      hora_medicion : '22:22:22',       
-      isChecked:'false'
-      }, { id:'3',
-     estacion: 'Drop Box 2',
-     fecha_medicion: '2021-01-19',
-     hora_medicion : '22:22:22',       
-     isChecked:'false'
-     }, { id:'4',
-     estacion: 'Drop Box 3',
-     fecha_medicion: '2021-01-01',
-     hora_medicion : '22:22:22',       
-     isChecked:'false'
-     }, { id:'5',
-     estacion: 'Drop Box 4',
-     fecha_medicion: '2021-01-02',
-     hora_medicion : '22:22:22',       
-     isChecked:'false'
-     }, { id:'6',
-     estacion: 'ADrop Box ',
-     fecha_medicion: '2021-01-03',
-     hora_medicion : '22:22:22',       
-     isChecked:'false'
-    }];
-    */
   
       this.total =  this.monitoreospp.length;
      
@@ -282,7 +218,7 @@ export class HomePage implements OnInit {
 
   async deleteError() {
     const toast = await this.toastController.create({
-      message: 'Comrpruebe su password. Error al eliminar ',
+      message: 'Compruebe el password. Error al eliminar ',
       duration: 2000,
       color: 'danger'
     });
@@ -308,6 +244,13 @@ sortalphabetic(a, b)
   var textB = b.estacion.toUpperCase();
   return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
 
+}
+sortdelay(a,b){
+	 
+	  var a = a.retraso;
+      var b = b.retraso;
+
+       return a > b ? 1 : (b > a ? -1 : 0);
 }
 
 order(){
@@ -341,6 +284,16 @@ order(){
     this.db.deleteMonitoreo(id);
 
   }
+
+  showdata(){
+
+    console.log(this.monitoreospp)
+   
+   
+  }
+
+
+
   editinfo(id)
   {
     this.router.navigate(['/monitoreo'],{ queryParams: { id: id } });
@@ -404,6 +357,7 @@ order(){
 
     await alert.present();
   }
+
 
 
 
@@ -474,6 +428,13 @@ order(){
       role: 'cancel',
       handler: () => {
         console.log('Cancel clicked');
+      }
+    },
+    ,{
+      text: 'Share',
+      icon: 'share-social-outline',
+      handler: () => {
+       this.showdata();
       }
     },
     ]

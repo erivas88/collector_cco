@@ -12,183 +12,16 @@ INSERT or IGNORE INTO product(id, name, creatorId) VALUES (5, 'Drifty Co', 3);
 INSERT or IGNORE INTO product(id, name, creatorId) VALUES (6, 'Ionicons', 3);
 
 
-CREATE TABLE IF NOT EXISTS estaciones(id INTEGER PRIMARY KEY AUTOINCREMENT,name varchar, estacionId INTEGER UNIQUE );
-/*
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('1', 'LXM-01', '1');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('2', 'LXM-02', '2');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('3', 'Drop Box 0', '3');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('4', 'DAM-1', '4');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('5', 'DA-02', '5');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('6', 'PBC-08', '6');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('7', 'CRW-01', '7');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('8', 'MNA-1A', '8');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('9', 'MNA-1B', '9');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('10', 'MNA-1C', '10');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('11', 'CRW-02', '11');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('12', 'PBC-02', '12');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('13', 'PBC-06', '13');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('14', 'PBC-07', '14');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('15', 'MNA-2A', '15');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('16', 'MNA-2B', '16');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('17', 'MNA-2C', '17');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('18', 'PBC-06B', '18');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('19', 'P3-TR', '19');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('20', 'LM-21', '20');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('21', 'LM-23', '21');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('22', 'LM-25', '22');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('23', 'PZL-1', '23');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('24', 'MNL-3A', '24');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('25', 'MNL-3B', '25');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('26', 'MNL-3C', '26');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('27', 'WE-01', '27');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('28', 'MNB-4A', '28');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('29', 'MNB-4B', '29');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('30', 'MNB-4C', '30');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('31', 'BRW-01', '31');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('32', 'BRW-02', '32');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('33', 'MNB-5A', '33');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('34', 'MNB-5B', '34');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('35', 'MNB-5C', '35');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('36', 'PBB-01', '36');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('37', 'POB-08B', '37');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('38', 'POB-07A (Antiguo)', '38');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('39', 'PBB-07', '39');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('41', 'POB-06B', '41');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('42', 'MNB-6A', '42');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('43', 'MNB-6B', '43');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('44', 'MNB-6C', '44');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('45', 'LM-34', '45');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('46', 'LM-33', '46');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('47', 'LM-32', '47');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('48', 'LM-35', '48');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('49', 'LM-31', '49');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('50', 'LM-30', '50');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('51', 'LM-29', '51');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('52', 'LM-36', '52');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('53', 'LM-10', '53');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('54', 'LM-27', '54');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('55', 'WE-02', '55');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('56', 'PMRS-1', '56');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('57', 'PMRS-2', '57');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('58', 'WE-09', '58');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('59', 'WE-03', '59');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('60', 'LM-28', '60');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('61', 'LM-05', '61');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('64', 'LM-51', '64');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('67', 'LM-42', '67');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('69', 'LM-38', '69');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('70', 'LM-39 ', '70');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('71', 'WP-01', '71');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('72', 'WP-02', '72');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('73', 'LM-06', '73');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('74', 'LM-07', '74');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('75', 'LM-17', '75');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('76', 'WP-03', '76');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('77', 'WP-04', '77');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('78', 'CCh-1', '78');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('79', 'CCh-2', '79');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('80', 'CCh-3', '80');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('81', 'CCh-4', '81');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('83', 'PR-1', '83');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('84', 'PPO-2', '84');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('85', 'PPR-1', '85');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('88', 'PER-01', '88');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('91', 'RE-2', '91');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('94', 'CCh-5', '94');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('98', 'PDB-2', '98');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('99', 'PEL-2', '99');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('101', 'PAF-1', '101');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('102', 'PNI-1', '102');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('104', 'RE-3', '104');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('105', 'CER-2', '105');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('106', 'Pozo SX', '106');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('107', 'Dren 9 SX', '107');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('108', 'Afloram. Truck Shop', '108');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('109', 'POC-07B', '109');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('110', 'POR-1A', '110');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('111', 'POR-1B', '111');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('112', 'POR-3A', '112');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('113', 'POR-3B', '113');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('114', 'POR-4', '114');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('115', 'LM-54', '115');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('116', 'LM-55', '116');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('117', 'LM-50', '117');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('118', 'LM-23A', '118');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('119', 'LM-40', '119');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('120', 'PZB-01', '120');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('121', 'PBB-6', '121');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('122', 'PRLB-1', '122');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('123', 'PRLB-2', '123');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('124', 'PRLB-3', '124');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('125', 'PRLB-4', '125');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('126', 'PRLB-5', '126');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('127', 'PRLB-6', '127');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('128', 'PRLB-7', '128');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('129', 'PRLB-8', '129');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('130', 'PRLB-9', '130');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('131', 'PRLB-10', '131');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('132', 'PRLB-11', '132');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('133', 'PRLB-12', '133');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('134', 'PRLB-13', '134');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('135', 'PRLB-14', '135');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('136', 'PZLB-01A', '136');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('137', 'PZLB-01B', '137');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('138', 'PZLB-01C', '138');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('139', 'PZLB-02', '139');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('140', 'PZLB-03A', '140');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('141', 'PZLB-03B', '141');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('142', 'PZLB-04A', '142');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('143', 'PZLB-04B', '143');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('144', 'P-1 TR', '144');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('145', 'POR-5A', '145');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('146', 'POR-5B', '146');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('147', 'POR-5C', '147');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('148', 'LM-43', '148');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('149', 'LM-56', '149');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('150', 'LM-49', '150');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('151', 'LM-49A', '151');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('152', 'LM-53', '152');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('153', 'LM-10A', '153');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('154', 'LP2 (50m arriba)', '154');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('155', 'LP2 (50m abajo)', '155');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('156', 'LP2-1', '156');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('157', 'LP2-2', '157');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('158', 'LP2-3', '158');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('159', 'POR-06', '159');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('160', 'PMRS-03', '160');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('161', 'PMRS-04', '161');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('162', 'PMRS-05', '162');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('163', 'PMRS-06', '163');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('164', 'POR-07', '164');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('165', 'LM-52 C1', '165');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('166', 'LM-52 C2', '166');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('167', 'LP1 (50m arriba)', '167');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('168', 'LP1 (50m abajo)', '168');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('169', 'LP1-1', '169');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('170', 'LP1-2', '170');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('171', 'LP1-3', '171');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('172', 'LP1-4', '172');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('173', 'LP1-5', '173');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('174', 'WE-05', '174');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('175', 'PNV-01', '175');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('176', 'PNV-02', '176');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('177', 'DCGN', '177');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('178', 'DCGS', '178');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('179', 'LM-48', '179');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('180', 'LM-22', '180');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('181', 'E.F El Potro (LM-15)', '181');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('182', 'E.F Montosa (LM-16)', '182');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('183', 'DGA-16', '183');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('184', 'LM-24', '184');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('185', 'LM-58', '185');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('186', 'POB-07B', '186');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('187', 'POB-07A (Nuevo)', '187');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('188', 'PAR', '188');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('189', 'REFINO', '189');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('190', 'LM-06B', '190');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('191', 'GPLB-5', '191');
-INSERT or IGNORE INTO estaciones(id, name, estacionId) VALUES ('192', 'GPLB-2', '192');*/
+/*CREATE TABLE IF NOT EXISTS estaciones(id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT, estacionId INTEGER UNIQUE, programaId INTEGER);*/
 
+CREATE TABLE IF NOT EXISTS estaciones (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    estacionId INTEGER UNIQUE,
+    programaId INTEGER,
+    latitud REAL, -- Columna para latitud
+    longitud REAL -- Columna para longitud
+);
 
 
 CREATE TABLE IF NOT EXISTS parametros(id INTEGER PRIMARY KEY AUTOINCREMENT,name varchar, value varchar);
@@ -201,35 +34,35 @@ INSERT or IGNORE INTO parametros(id, name, value) VALUES (6, 'Oxigeno Disuelto',
 INSERT or IGNORE INTO parametros(id, name, value) VALUES (7, 'Turbiedad', 'turbiedad');
 INSERT or IGNORE INTO parametros(id, name, value) VALUES (8, 'SDT','sdt');
 
+CREATE TABLE IF NOT EXISTS programas(id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,name varchar, programaId INTEGER);
 
-CREATE TABLE IF NOT EXISTS programas(id INTEGER PRIMARY KEY AUTOINCREMENT,name varchar UNIQUE, codedatabase INTEGER);
-/*INSERT or IGNORE INTO programas(id, name) VALUES (1, 'PMR-Ene 2021');
-INSERT or IGNORE INTO programas(id, name) VALUES (2, 'PMR-Feb 2021');*/
 
 CREATE TABLE IF NOT EXISTS equipos(id INTEGER PRIMARY KEY AUTOINCREMENT,codigo TEXT,tipo_equipo TEXT, parametro TEXT,tipo TEXT);
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (1, 'GP-S-27','Molinete','Caudal','1');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (1, 'GP-S-027','Molinete','Caudal','1');
 INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (2, 'GP-S-131','Molinete','Caudal','1');
 INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (3, 'GP-S-283','Molinete','Caudal','1');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (4, 'GP-S-35','Pozómetro','Nivel','2');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (5, 'GP-S-113','Pozómetro','Nivel','2');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (6, 'GP-S-114','Pozómetro','Nivel','2');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (7, 'GP-S-284','Pozómetro','Nivel','2');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (8, 'GP-S-285','Pozómetro','Nivel','2');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (9, 'GP-S-291','Pozómetro','Nivel','2');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (10, 'GP-S-298','Pozómetro','Nivel','2');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (11, 'GP-S-87','Equipo','Fisicoquímicos','3');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (12, 'GP-S-241','Equipo ','Fisicoquímicos','3');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (13, 'GP-S-249','Sonda ','Fisicoquímicos','3');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (14, 'GP-S-253','Sonda','Fisicoquímicos','3');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (15, 'GP-S-275','Sonda','Fisicoquímicos','3');
-INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (16, 'GP-S-2758','Turbidiometro','Turbiedad','4');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (4, 'GP-S-035','Pozómetro','Nivel','2');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (5, 'GP-S-114','Pozómetro','Nivel','2');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (6, 'GP-S-284','Pozómetro','Nivel','2');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (7, 'GP-S-285','Pozómetro','Nivel','2');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (9, 'GP-S-301','Flexometro','Nivel','2');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (11, 'GP-S-087','Equipo','Fisicoquímicos','3');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (12, 'GP-S-275','Equipo ','Fisicoquímicos','3');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (14, 'GP-S-249','Sonda','Fisicoquímicos','3');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (16, 'GP-S-348','Sonda','Fisicoquimicos','3');
+INSERT or IGNORE INTO equipos(id, codigo,tipo_equipo,parametro,tipo) VALUES (17, 'GP-S-305','Turbidimetro','Turbiedad','4');
 
+
+
+ 
+
+CREATE TABLE IF NOT EXISTS usuarios(id INTEGER PRIMARY KEY AUTOINCREMENT,nombre TEXT,apellido TEXT, rut TEXT, estado TEXT);
+INSERT or IGNORE INTO usuarios(id, nombre,apellido,rut,estado) VALUES (2, 'Rodrigo','Constanzo','26137981-K','1');
+INSERT or IGNORE INTO usuarios(id, nombre,apellido,rut,estado) VALUES (3, 'Consuelo','Gomez','26137985-K','1');
+INSERT or IGNORE INTO usuarios(id, nombre,apellido,rut,estado) VALUES (4, 'Makarena','Avila','26137985-K','1');
+INSERT or IGNORE INTO usuarios(id, nombre,apellido,rut,estado) VALUES (5, 'Jean','Corrales','26137985-K','1');
 
 CREATE TABLE IF NOT EXISTS programa_estacion(id_pestacion INTEGER PRIMARY KEY AUTOINCREMENT, id_table_mysql INTEGER UNIQUE, id_programa INTEGER,id_estacion INTEGER,nivel_enable varchar,caudal_enable varchar,tempe_enable varchar,ph_enable varchar,conductividad_enable varchar,oxigeno_enable varchar, turbiedad_enable varchar);
-
-
-CREATE TABLE IF NOT EXISTS monitoreos(id INTEGER PRIMARY KEY AUTOINCREMENT,programa TEXT, estacion TEXT, equipo_nivel TEXT, valor_nivel TEXT, equipo_caudal TEXT,valor_caudal TEXT,equipo_multi TEXT,valor_temperatura TEXT,valor_ph TEXT,valor_conductividad TEXT ,valor_oxigeno TEXT,equipo_turbiedad TEXT,valor_turbiedad,fecha_medicion date, hora_medicion TEXT, ischecked TEXT,serverip varchar,dateserver varchar,latitud varchar,longitud varchar);
-
-
-CREATE TABLE IF NOT EXISTS historicos(id INTEGER PRIMARY KEY AUTOINCREMENT,certificado varchar UNIQUE ,fecha date,estacion varchar,nivel varchar,caudal varchar, ph varchar,temperatura varchar,conductividad varchar, oxigeno varchar, turbiedad varchar, sdt varchar);
+CREATE TABLE IF NOT EXISTS monitoreos(id INTEGER PRIMARY KEY AUTOINCREMENT,programa TEXT, estacion TEXT, equipo_nivel TEXT, valor_nivel TEXT, equipo_caudal TEXT,valor_caudal TEXT,equipo_multi TEXT,valor_temperatura TEXT,valor_ph TEXT,valor_conductividad TEXT ,valor_oxigeno TEXT,equipo_turbiedad TEXT,valor_turbiedad,fecha_medicion date, hora_medicion TEXT, ischecked TEXT,serverip varchar,dateserver varchar,latitud varchar,longitud varchar, profundidad varchar, observacion varchar, id_laboratorio varchar, inspector varchar, metodo varchar, tipo_agua varchar, tipo_nivel varchar, hora_nivel varchar, hidroquimico varchar, isotopico varchar, fallido varchar);
+CREATE TABLE IF NOT EXISTS historicos(id INTEGER PRIMARY KEY AUTOINCREMENT,certificado varchar,fecha date,estacion varchar,nivel varchar,caudal varchar, ph varchar,temperatura varchar,conductividad varchar, oxigeno varchar, turbiedad varchar, sdt varchar);
 

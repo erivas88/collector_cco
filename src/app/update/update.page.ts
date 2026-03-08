@@ -33,7 +33,7 @@ export class UpdatePage implements OnInit {
   textoBuscar: string = '';
   total  : any;
   estatus = {'dns':'','class':'','icon':''};
-  masterkey ='gp262020';
+  masterkey ='gp292021';
 
   constructor(private db: DatabaseService,
     public alertController: AlertController,
@@ -67,68 +67,6 @@ export class UpdatePage implements OnInit {
     });
 
 
-  /*  this.monitoreospp = [
-      { id:'1',
-        estacion: 'Drop Box 0',
-        fecha_medicion: '01-01-2021',
-        hora_medicion : '22:22:22',       
-        isChecked:false
-        }, { id:'2',
-        estacion: 'Drop Box 1',
-        fecha_medicion: '01-01-2021',
-        hora_medicion : '22:22:22',       
-        isChecked:false
-        }, { id:'3',
-       estacion: 'Drop Box 2',
-       fecha_medicion: '01-01-2021',
-       hora_medicion : '22:22:22',       
-       isChecked:false
-       }, { id:'4',
-       estacion: 'Drop Box 3',
-       fecha_medicion: '01-01-2021',
-       hora_medicion : '22:22:22',       
-       isChecked:false
-       }, { id:'5',
-       estacion: 'Drop Box 4',
-       fecha_medicion: '01-01-2021',
-       hora_medicion : '22:22:22',       
-       isChecked:false
-       }, { id:'6',
-       estacion: 'Drop Box ',
-       fecha_medicion: '01-01-2021',
-       hora_medicion : '22:22:22',       
-       isChecked:false
-      },{ id:'1',
-      estacion: 'Drop Box 0',
-      fecha_medicion: '01-01-2021',
-      hora_medicion : '22:22:22',       
-      isChecked:false
-      }, { id:'2',
-      estacion: 'Drop Box 1',
-      fecha_medicion: '01-01-2021',
-      hora_medicion : '22:22:22',       
-      isChecked:false
-      }, { id:'3',
-     estacion: 'Drop Box 2',
-     fecha_medicion: '01-01-2021',
-     hora_medicion : '22:22:22',       
-     isChecked:false
-     }, { id:'4',
-     estacion: 'Drop Box 3',
-     fecha_medicion: '01-01-2021',
-     hora_medicion : '22:22:22',       
-     isChecked:false
-     }, { id:'5',
-     estacion: 'Drop Box 4',
-     fecha_medicion: '01-01-2021',
-     hora_medicion : '22:22:22',       
-     isChecked:false
-     }, { id:'6',
-     estacion: 'Drop Box ',
-     fecha_medicion: '01-01-2021',
-     hora_medicion : '22:22:22',       
-     isChecked:false
-    }];*/
       this.total =  this.monitoreospp.length;
      
    
@@ -136,30 +74,9 @@ export class UpdatePage implements OnInit {
   ionViewDidEnter() { 
 
     this.resolveDNS();
-
-    console.log("ionViewDidEnter"); 
-    
+    console.log("ionViewDidEnter");     
     console.log(this.estatus);
-   // this.resolveDNS();
-
-   /*  this.db.getDatabaseState().subscribe(rdy => {
-     if (rdy) {
-       this.db.getDevs().subscribe(devs => {
-         this.developers = devs;
-       })    
-
-       this.db.loadUpdates(); 
-       
-       this.db.getActulizaciones().subscribe((data) => {
-         this.monitoreospp= data;
-         console.log('act:',data)
-       }, (err) => {
-       console.log(err);
-       });
-
-     }
-     
-   });*/
+ 
 
   
   }
@@ -211,7 +128,8 @@ async ErrormessageDNS() {
     console.log(event)
     this.textoBuscar =event.detail.value ;
   }
-  doRefresh(event) {
+  doRefresh(event)
+  {
 
 
     this.resolveDNS();
@@ -409,7 +327,7 @@ async ErrormessageDNS() {
 
   async deleteError() {
     const toast = await this.toastController.create({
-      message: 'Comrpruebe su password. Error al eliminar ',
+      message: 'Compruebe su password. Error al eliminar ',
       duration: 2000,
       color: 'danger'
     });
